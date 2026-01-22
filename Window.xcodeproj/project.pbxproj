@@ -19,6 +19,7 @@
 		1A00000A000000000000001 /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000010 /* NotesViewModel.swift */; };
 		1A00000B000000000000001 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000011 /* StorageService.swift */; };
 		1A00000C000000000000001 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000012 /* AlertService.swift */; };
+		1A00000D000000000000001 /* WindowPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000014 /* WindowPanel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		1A000000000000000000011 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		1A000000000000000000012 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		1A000000000000000000013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1A000000000000000000014 /* WindowPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowPanel.swift; sourceTree = "<group>"; };
 		1A100000000000000000001 /* Window.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Window.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -61,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				1A000000000000000000001 /* WindowApp.swift */,
+				1A000000000000000000014 /* WindowPanel.swift */,
 				1A000000000000000000013 /* Info.plist */,
 				1A300000000000000000004 /* Views */,
 				1A300000000000000000005 /* Models */,
@@ -197,6 +200,7 @@
 				1A00000A000000000000001 /* NotesViewModel.swift in Sources */,
 				1A00000B000000000000001 /* StorageService.swift in Sources */,
 				1A00000C000000000000001 /* AlertService.swift in Sources */,
+				1A00000D000000000000001 /* WindowPanel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

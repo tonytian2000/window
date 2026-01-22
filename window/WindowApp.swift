@@ -13,7 +13,7 @@ struct WindowApp: App {
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem?
-    private var popover: NSPopover?
+    private var panel: NSPanel?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Create the status item in the menu bar
@@ -21,28 +21,52 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if let button = statusItem?.button {
             button.image = NSImage(systemSymbolName: "bell.fill", accessibilityDescription: "Window")
-            button.action = #selector(togglePopover)
+            button.action = #selector(togglePanel)
             button.target = self
         }
         
-        // Create the popover
-        popover = NSPopover()
-        popover?.contentSize = NSSize(width: 360, height: 500)
-        popover?.behavior = .transient
-        popover?.contentViewController = NSHostingController(rootView: ContentView())
+        // Create the panel with Itsycal-style appearance
+        let panel = WindowPanel(
+            contentRect: NSRect(x: 0, y: 0, width: 360, height: 500),
+            styleMask: [.borderless],
+            backing: .buffered,
+            defer: false
+        )
+        
+        // Configure panel appearance
+        panel.isFloatingPanel = true
+        panel.level = .popUpMenu
+        panel.collectionBehavior = [.canJoinAllSpaces, .stationary, .fullScreenAuxiliary]
+        panel.animationBehavior = .utilityWindow
+        panel.isMovable = false
+        panel.backgroundColor = .clear
+        panel.hasShadow = true
+        panel.hidesOnDeactivate = false
+        
+        panel.contentView = NSHostingView(rootView: ContentView())
+        
+        self.panel = panel
         
         // Hide dock icon - this app only lives in menu bar
         NSApp.setActivationPolicy(.accessory)
     }
     
-    @objc func togglePopover() {
-        if let button = statusItem?.button {
-            if popover?.isShown == true {
-                popover?.performClose(nil)
-            } else {
-                popover?.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-                popover?.contentViewController?.view.window?.makeKey()
-            }
+    @objc func togglePanel() {
+        guard let panel = panel, let button = statusItem?.button else { return }
+        
+        if panel.isVisible {
+            panel.orderOut(nil)
+        } else {
+            // Position panel below the menu bar icon
+            let buttonFrame = button.window?.convertToScreen(button.convert(button.bounds, to: nil)) ?? .zero
+            let panelX = buttonFrame.midX - panel.frame.width / 2
+            let panelY = buttonFrame.minY - panel.frame.height - 8
+            
+            panel.setFrameOrigin(NSPoint(x: panelX, y: panelY))
+            panel.makeKeyAndOrderFront(nil)
+            
+            // Ensure app activates to receive events
+            NSApp.activate(ignoringOtherApps: true)
         }
     }
 }

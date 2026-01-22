@@ -6,41 +6,20 @@ struct ContentView: View {
     @StateObject private var notesViewModel = NotesViewModel()
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Header
-            HStack {
-                Text("Window")
-                    .font(.headline)
-                    .foregroundColor(.primary)
+        HStack(spacing: 0) {
+            // Left sidebar with tabs
+            VStack(spacing: 0) {
+                TabButton(title: "Alerts", icon: "bell.fill", tag: 0, selectedTab: $selectedTab, badgeCount: alertsViewModel.unreadCount)
+                TabButton(title: "Notes", icon: "note.text", tag: 1, selectedTab: $selectedTab)
+                TabButton(title: "Settings", icon: "gearshape.fill", tag: 2, selectedTab: $selectedTab)
                 Spacer()
-                if alertsViewModel.unreadCount > 0 {
-                    Text("\(alertsViewModel.unreadCount)")
-                        .font(.caption)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(Color.red)
-                        .clipShape(Capsule())
-                }
             }
-            .padding()
-            .background(Color(NSColor.controlBackgroundColor))
+            .frame(width: 80)
+            .background(Color(NSColor.controlBackgroundColor).opacity(0.5))
             
             Divider()
             
-            // Tab selection
-            Picker("", selection: $selectedTab) {
-                Text("Alerts").tag(0)
-                Text("Notes").tag(1)
-                Text("Settings").tag(2)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding(.horizontal)
-            .padding(.vertical, 8)
-            
-            Divider()
-            
-            // Content based on selected tab
+            // Main content area
             Group {
                 switch selectedTab {
                 case 0:
@@ -55,6 +34,52 @@ struct ContentView: View {
             }
         }
         .frame(width: 360, height: 500)
+        .background(Color(NSColor.windowBackgroundColor))
+        .cornerRadius(10)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color(NSColor.separatorColor).opacity(0.3), lineWidth: 0.5)
+        )
+    }
+}
+
+struct TabButton: View {
+    let title: String
+    let icon: String
+    let tag: Int
+    @Binding var selectedTab: Int
+    var badgeCount: Int = 0
+    
+    var body: some View {
+        Button(action: {
+            selectedTab = tag
+        }) {
+            VStack(spacing: 4) {
+                ZStack(alignment: .topTrailing) {
+                    Image(systemName: icon)
+                        .font(.system(size: 20))
+                    
+                    if badgeCount > 0 {
+                        Text("\(badgeCount)")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 2)
+                            .background(Color.red)
+                            .clipShape(Capsule())
+                            .offset(x: 8, y: -8)
+                    }
+                }
+                
+                Text(title)
+                    .font(.caption2)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
+            .background(selectedTab == tag ? Color.accentColor.opacity(0.15) : Color.clear)
+            .foregroundColor(selectedTab == tag ? .accentColor : .secondary)
+        }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 

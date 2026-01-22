@@ -16,18 +16,20 @@ This application addresses two primary use cases:
 
 ### Core Functionality
 - **Menu Bar Integration**: Native macOS menu bar icon that remains accessible at all times
-- **Popup Window**: Compact, non-intrusive window that appears below the menu bar icon when clicked
-- **Alert Display**: Shows notifications and alerts from production environments
-- **Note Recording**: Quick note-taking interface for daily work items
+- **Popup Window**: Compact, non-intrusive window that appears below the menu bar icon when clicked,the layout of window is three sections in vertical. the top is the title and some small controls. the middle occupy most space and show the main application content. the buttom show main controls that config or control the application. there is configuration for the window, such as size, color, font.
+- **Application Alert Display**: Shows notifications and alerts from production environments
+- **Application Note Recording**: Quick note-taking interface for daily work items
 - **Persistent Storage**: Saves notes and alert history locally
 
 ### Technical Characteristics
 - **Platform**: macOS native application
-- **UI Pattern**: Menu bar app with dropdown window (similar to system notifications)
+
+- **UI Pattern**: Menu bar app with dropdown window (similar to system notifications). Menu bar can choose is small icon or a bar can display some information.
 - **Always Available**: Runs in background, minimal resource usage
 - **Quick Access**: Single-click access to information and note-taking
 
 ## Technology Stack
+
 
 ### Expected Technologies
 - **Language**: Swift (recommended for macOS development)
@@ -38,7 +40,9 @@ This application addresses two primary use cases:
 - **Notifications**: User Notifications framework for alerts
 
 ## Project Structure
-
+Need split the framework with the concrete application. 
+Framework is common, that define how to create the top menu and pop up the window when click the top mene.
+Application can be mutliple, such as application for alert display, application for short note. you can switch the application according to the configuration. if multiple applications are enabled, you can use the tab to switch the application in the window.
 ```
 window/
 ├── .gitignore              # Git ignore rules
@@ -93,14 +97,19 @@ window/
 - Badge indicator for unread alerts
 - Click to toggle window display
 
-### Popup Window
+### Panel Window (Itsycal-Style)
+- Borderless NSPanel with rounded corners
+- Clean, modern appearance with subtle shadow
 - Positioned directly below menu bar icon
+- Floats above all other windows
+- Non-activating panel (doesn't steal focus)
 - Tabs or sections for:
   - Production Alerts
   - Daily Notes
   - Settings
-- Compact size (approximately 300-400px wide, 400-500px tall)
+- Compact size (360px wide, 500px tall)
 - Dark mode support
+- Smooth animation behavior
 - Keyboard shortcuts for quick actions
 
 ## Configuration
