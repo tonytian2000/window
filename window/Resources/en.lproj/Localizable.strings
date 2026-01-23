@@ -1,0 +1,94 @@
+/* Main App */
+"app.title" = "Window";
+
+/* Menu Bar */
+"menu.quit" = "Quit Window";
+
+/* Content View - Tabs */
+"tab.alerts" = "Alerts";
+"tab.notes" = "Notes";
+
+/* Alerts View */
+"alerts.title" = "Production Alerts";
+"alerts.empty.icon" = "bell.slash";
+"alerts.empty.title" = "No alerts";
+"alerts.empty.subtitle" = "Production alerts will appear here";
+"alerts.search.placeholder" = "Search alerts...";
+"alerts.test" = "Test Alert";
+"alerts.settings" = "Alert Settings";
+"alerts.clear.all" = "Clear All";
+"alerts.refresh" = "Refresh alerts";
+"alerts.mark.all.read" = "Mark All Read";
+
+/* Alert Row */
+"alert.acknowledge" = "Acknowledge";
+"alert.delete" = "Delete";
+"alert.mark.read" = "Mark as Read";
+"alert.mark.unread" = "Mark as Unread";
+
+/* Alert Settings */
+"alert.settings.title" = "Alert Settings";
+"alert.settings.check.interval" = "Check Interval";
+"alert.settings.minutes" = "minutes";
+"alert.settings.endpoint" = "API Endpoint";
+"alert.settings.endpoint.placeholder" = "https://api.example.com/alerts";
+"alert.settings.test.connection" = "Test Connection";
+"alert.settings.save" = "Save";
+"alert.settings.cancel" = "Cancel";
+
+/* Notes View */
+"notes.editor" = "Editor";
+"notes.history" = "History";
+"notes.category.placeholder" = "Category (optional)";
+"notes.content.placeholder" = "Write your note here...";
+"notes.save" = "Save";
+"notes.search.placeholder" = "Search notes...";
+"notes.empty.title" = "No notes yet";
+"notes.empty.subtitle" = "Add your first note in Editor";
+"notes.search.empty.title" = "No matching notes";
+"notes.search.empty.subtitle" = "Try a different search term";
+"notes.settings" = "Notes Settings";
+"notes.export" = "Export Notes";
+
+/* Note Row */
+"note.edit" = "Edit";
+"note.delete" = "Delete";
+
+/* Notes Settings */
+"notes.settings.title" = "Notes Settings";
+"notes.settings.default.category" = "Default Category";
+"notes.settings.default.category.placeholder" = "Work";
+"notes.settings.auto.timestamp" = "Auto-add Timestamp";
+"notes.settings.save.location" = "Save Location";
+"notes.settings.choose" = "Choose...";
+"notes.settings.save" = "Save";
+"notes.settings.cancel" = "Cancel";
+
+/* Settings View */
+"settings.title" = "Settings";
+"settings.appearance" = "Appearance";
+"settings.language" = "Language";
+"settings.language.select" = "Select Language";
+"settings.theme" = "Theme";
+"settings.theme.system" = "System";
+"settings.theme.light" = "Light";
+"settings.theme.dark" = "Dark";
+"settings.window" = "Window";
+"settings.startup" = "Launch at Login";
+"settings.notifications" = "Notifications";
+"settings.sound" = "Sound Alerts";
+"settings.badge" = "Menu Bar Badge";
+"settings.about" = "About";
+"settings.version" = "Version";
+"settings.close" = "Close";
+
+/* General */
+"general.ok" = "OK";
+"general.cancel" = "Cancel";
+"general.save" = "Save";
+"general.delete" = "Delete";
+"general.edit" = "Edit";
+"general.done" = "Done";
+"general.loading" = "Loading...";
+"general.error" = "Error";
+"general.success" = "Success";

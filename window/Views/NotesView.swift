@@ -2,6 +2,7 @@ import SwiftUI
 
 struct NotesView: View {
     @ObservedObject var viewModel: NotesViewModel
+    @ObservedObject var localization = LocalizationManager.shared
     @State private var newNoteText = ""
     @State private var selectedCategory = ""
     @State private var showingSettings = false
@@ -15,9 +16,9 @@ struct NotesView: View {
                 HStack(spacing: 16) {
                     Button(action: { selectedNotesTab = 0 }) {
                         HStack(spacing: 4) {
-                            Image(systemName: "pencil.circle")
-                                .font(.system(size: 14))
-                            Text("Editor")
+                            Image(systemName: "square.and.pencil")
+                                .font(.system(size: 16, weight: .medium))
+                            Text(localization.localized("notes.editor"))
                                 .font(.caption)
                         }
                         .foregroundColor(selectedNotesTab == 0 ? .accentColor : .secondary)
@@ -26,9 +27,9 @@ struct NotesView: View {
                     
                     Button(action: { selectedNotesTab = 1 }) {
                         HStack(spacing: 4) {
-                            Image(systemName: "clock.arrow.circlepath")
-                                .font(.system(size: 14))
-                            Text("History")
+                            Image(systemName: "clock.fill")
+                                .font(.system(size: 16, weight: .medium))
+                            Text(localization.localized("notes.history"))
                                 .font(.caption)
                         }
                         .foregroundColor(selectedNotesTab == 1 ? .accentColor : .secondary)
@@ -89,7 +90,7 @@ struct NotesView: View {
         ZStack(alignment: .bottomTrailing) {
             VStack(spacing: 0) {
                 // Category input - no label
-                TextField("Category (optional)", text: $selectedCategory)
+                TextField(localization.localized("notes.category.placeholder"), text: $selectedCategory)
                     .textFieldStyle(PlainTextFieldStyle())
                     .font(.caption)
                     .padding(.horizontal, 12)
@@ -99,7 +100,7 @@ struct NotesView: View {
                 Divider()
                 
                 // Note content editor with hidden scrollbar
-                NoScrollBarTextEditor(text: $newNoteText, placeholder: "Write your note here...")
+                NoScrollBarTextEditor(text: $newNoteText, placeholder: localization.localized("notes.content.placeholder"))
                     .focused($isTextFieldFocused)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(3)
@@ -111,7 +112,7 @@ struct NotesView: View {
                 Button(action: addNote) {
                     HStack(spacing: 4) {
                         Image(systemName: "checkmark.circle.fill")
-                        Text("Save")
+                        Text(localization.localized("notes.save"))
                     }
                     .font(.caption)
                     .foregroundColor(.white)
@@ -138,7 +139,7 @@ struct NotesView: View {
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.secondary)
-                TextField("Search notes...", text: $viewModel.searchText)
+                TextField(localization.localized("notes.search.placeholder"), text: $viewModel.searchText)
                     .textFieldStyle(PlainTextFieldStyle())
                 if !viewModel.searchText.isEmpty {
                     Button(action: { viewModel.searchText = "" }) {
@@ -159,10 +160,10 @@ struct NotesView: View {
                     Image(systemName: viewModel.searchText.isEmpty ? "note.text" : "magnifyingglass")
                         .font(.system(size: 40))
                         .foregroundColor(.secondary)
-                    Text(viewModel.searchText.isEmpty ? "No notes yet" : "No matching notes")
+                    Text(viewModel.searchText.isEmpty ? localization.localized("notes.empty.title") : localization.localized("notes.search.empty.title"))
                         .font(.headline)
                         .foregroundColor(.secondary)
-                    Text(viewModel.searchText.isEmpty ? "Add your first note in Editor" : "Try a different search term")
+                    Text(viewModel.searchText.isEmpty ? localization.localized("notes.empty.subtitle") : localization.localized("notes.search.empty.subtitle"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -341,10 +342,10 @@ struct NoteRow: View {
             isHovered = hovering
         }
         .contextMenu {
-            Button("Edit") {
+            Button(LocalizationManager.shared.localized("note.edit")) {
                 startEditing()
             }
-            Button("Delete") {
+            Button(LocalizationManager.shared.localized("note.delete")) {
                 viewModel.deleteNote(note)
             }
         }

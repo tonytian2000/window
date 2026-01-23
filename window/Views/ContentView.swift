@@ -6,14 +6,15 @@ struct ContentView: View {
     @State private var showingNotesSettings = false
     @StateObject private var alertsViewModel = AlertsViewModel()
     @StateObject private var notesViewModel = NotesViewModel()
+    @ObservedObject var localization = LocalizationManager.shared
     
     var body: some View {
         HStack(spacing: 0) {
             // Left sidebar with tabs
             VStack(spacing: 0) {
-                TabButton(title: "Alerts", icon: "bell.fill", tag: 0, selectedTab: $selectedTab, badgeCount: alertsViewModel.unreadCount)
-                TabButton(title: "Notes", icon: "note.text", tag: 1, selectedTab: $selectedTab)
-                TabButton(title: "Settings", icon: "gearshape.fill", tag: 2, selectedTab: $selectedTab)
+                TabButton(title: localization.localized("tab.alerts"), icon: "bell.fill", tag: 0, selectedTab: $selectedTab, badgeCount: alertsViewModel.unreadCount)
+                TabButton(title: localization.localized("tab.notes"), icon: "note.text", tag: 1, selectedTab: $selectedTab)
+                TabButton(title: localization.localized("settings.title"), icon: "gearshape.fill", tag: 2, selectedTab: $selectedTab)
                 Spacer()
             }
             .frame(width: 50)

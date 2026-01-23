@@ -1,0 +1,94 @@
+/* Main App */
+"app.title" = "Window";
+
+/* Menu Bar */
+"menu.quit" = "退出 Window";
+
+/* Content View - Tabs */
+"tab.alerts" = "警报";
+"tab.notes" = "笔记";
+
+/* Alerts View */
+"alerts.title" = "生产环境警报";
+"alerts.empty.icon" = "bell.slash";
+"alerts.empty.title" = "没有警报";
+"alerts.empty.subtitle" = "生产环境警报将在此显示";
+"alerts.search.placeholder" = "搜索警报...";
+"alerts.test" = "测试警报";
+"alerts.settings" = "警报设置";
+"alerts.clear.all" = "全部清除";
+"alerts.refresh" = "刷新警报";
+"alerts.mark.all.read" = "全部标为已读";
+
+/* Alert Row */
+"alert.acknowledge" = "确认";
+"alert.delete" = "删除";
+"alert.mark.read" = "标为已读";
+"alert.mark.unread" = "标为未读";
+
+/* Alert Settings */
+"alert.settings.title" = "警报设置";
+"alert.settings.check.interval" = "检查间隔";
+"alert.settings.minutes" = "分钟";
+"alert.settings.endpoint" = "API 端点";
+"alert.settings.endpoint.placeholder" = "https://api.example.com/alerts";
+"alert.settings.test.connection" = "测试连接";
+"alert.settings.save" = "保存";
+"alert.settings.cancel" = "取消";
+
+/* Notes View */
+"notes.editor" = "编辑器";
+"notes.history" = "历史";
+"notes.category.placeholder" = "分类（可选）";
+"notes.content.placeholder" = "在此写下您的笔记...";
+"notes.save" = "保存";
+"notes.search.placeholder" = "搜索笔记...";
+"notes.empty.title" = "还没有笔记";
+"notes.empty.subtitle" = "在编辑器中添加您的第一条笔记";
+"notes.search.empty.title" = "没有匹配的笔记";
+"notes.search.empty.subtitle" = "尝试不同的搜索词";
+"notes.settings" = "笔记设置";
+"notes.export" = "导出笔记";
+
+/* Note Row */
+"note.edit" = "编辑";
+"note.delete" = "删除";
+
+/* Notes Settings */
+"notes.settings.title" = "笔记设置";
+"notes.settings.default.category" = "默认分类";
+"notes.settings.default.category.placeholder" = "工作";
+"notes.settings.auto.timestamp" = "自动添加时间戳";
+"notes.settings.save.location" = "保存位置";
+"notes.settings.choose" = "选择...";
+"notes.settings.save" = "保存";
+"notes.settings.cancel" = "取消";
+
+/* Settings View */
+"settings.title" = "设置";
+"settings.appearance" = "外观";
+"settings.language" = "语言";
+"settings.language.select" = "选择语言";
+"settings.theme" = "主题";
+"settings.theme.system" = "系统";
+"settings.theme.light" = "浅色";
+"settings.theme.dark" = "深色";
+"settings.window" = "窗口";
+"settings.startup" = "登录时启动";
+"settings.notifications" = "通知";
+"settings.sound" = "声音警报";
+"settings.badge" = "菜单栏徽章";
+"settings.about" = "关于";
+"settings.version" = "版本";
+"settings.close" = "关闭";
+
+/* General */
+"general.ok" = "确定";
+"general.cancel" = "取消";
+"general.save" = "保存";
+"general.delete" = "删除";
+"general.edit" = "编辑";
+"general.done" = "完成";
+"general.loading" = "加载中...";
+"general.error" = "错误";
+"general.success" = "成功";

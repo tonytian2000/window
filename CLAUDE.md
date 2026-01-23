@@ -11,6 +11,7 @@ Window is a lightweight macOS menu bar application designed to display productio
 - **Framework**: SwiftUI
 - **Language**: Swift 5.0
 - **Build System**: Xcode project
+- **Localization**: English (en) and Simplified Chinese (zh-Hans)
 
 ### Project Structure
 
@@ -18,7 +19,7 @@ Window is a lightweight macOS menu bar application designed to display productio
 window/
 ├── WindowApp.swift          # Main app entry point with menu bar integration
 ├── WindowPanel.swift        # Custom NSPanel for keyboard input support
-├── Info.plist              # App configuration
+├── Info.plist              # App configuration (includes localization settings)
 ├── Views/
 │   ├── ContentView.swift        # Main view with left sidebar navigation
 │   ├── AlertsView.swift         # Production alerts display
@@ -33,9 +34,14 @@ window/
 ├── ViewModels/
 │   ├── AlertsViewModel.swift    # Alerts business logic
 │   └── NotesViewModel.swift     # Notes business logic
-└── Services/
-    ├── StorageService.swift     # Data persistence
-    └── AlertService.swift       # API integration for alerts
+├── Services/
+│   ├── StorageService.swift     # Data persistence
+│   └── AlertService.swift       # API integration for alerts
+└── Resources/
+    ├── en.lproj/
+    │   └── Localizable.strings  # English localization
+    └── zh-Hans.lproj/
+        └── Localizable.strings  # Simplified Chinese localization
 ```
 
 ## Key Features
@@ -88,17 +94,42 @@ window/
   - Maximum notes retention
 
 ### 5. User Interface
-- **Left Sidebar Navigation** (80px wide)
-  - Icon-based tabs with labels
+- **Left Sidebar Navigation** (50px wide)
+  - Icon-based tabs with tooltips
   - Badge counter on Alerts icon
   - Active tab highlighting with blue accent
   - Icons: bell (Alerts), note (Notes), gear (Settings)
   
-- **Content Area** (280px wide)
+- **Content Area** (400px wide)
   - Scrollable views
   - Consistent styling across tabs
   - Modal sheets for app-specific settings
   - Auto-saving for all settings
+  - Fully localized interface
+  
+### 6. Internationalization (i18n)
+- **Supported Languages**:
+  - English (en) - Default
+  - Simplified Chinese (zh-Hans)
+  
+- **Localization Scope**:
+  - All UI text (buttons, labels, placeholders)
+  - Tab names and navigation
+  - Alert and note empty states
+  - Settings screens
+  - Context menus
+  - Tooltips and help text
+  
+- **Language Selection**:
+  - Automatically follows system language preference
+  - Switches between English and Chinese based on macOS settings
+  - No manual language selector needed (system-driven)
+  
+- **Technical Implementation**:
+  - `NSLocalizedString()` for all user-facing text
+  - Separate `.strings` files for each language
+  - Variant groups in Xcode project
+  - `CFBundleLocalizations` in Info.plist
 
 ## Technical Implementation
 
@@ -304,6 +335,11 @@ When working with Claude on this project, these files are most relevant:
 - `AlertService.swift` - API integration for fetching alerts
 - `StorageService.swift` - Data persistence layer
 
+**Localization:**
+- `Resources/en.lproj/Localizable.strings` - English translations
+- `Resources/zh-Hans.lproj/Localizable.strings` - Chinese translations
+- `Info.plist` - Includes `CFBundleLocalizations` array
+
 **Documentation:**
 - `README.md` - Project overview and quick start
 - `SETUP.md` - Detailed setup instructions
@@ -353,12 +389,44 @@ When working with Claude on this project, these files are most relevant:
 - Verify all files are in Xcode project
 - Check Swift version compatibility (5.0+)
 
+## Adding New Languages
+
+To add support for additional languages:
+
+1. **Create new .lproj directory**:
+   ```bash
+   mkdir -p window/Resources/ja.lproj  # Example: Japanese
+   ```
+
+2. **Copy and translate Localizable.strings**:
+   ```bash
+   cp window/Resources/en.lproj/Localizable.strings window/Resources/ja.lproj/
+   # Edit the file to translate all values (keep keys the same)
+   ```
+
+3. **Update Info.plist**:
+   ```xml
+   <key>CFBundleLocalizations</key>
+   <array>
+       <string>en</string>
+       <string>zh-Hans</string>
+       <string>ja</string>  <!-- Add new language code -->
+   </array>
+   ```
+
+4. **Update project.pbxproj**:
+   - Add file reference for new language variant
+   - Add to variant group
+   - Add to known regions
+
+5. **Test**: Change macOS system language to verify translations
+
 ## Project Status
 
 ✅ **Completed Features:**
 - Menu bar integration with icon and badge
 - Borderless panel with keyboard input support
-- Left sidebar navigation
+- Left sidebar navigation (50px with icons)
 - Production alerts monitoring
 - Quick notes with search and export
 - General settings interface
@@ -367,5 +435,7 @@ When working with Claude on this project, these files are most relevant:
 - Full MVVM architecture
 - Data persistence
 - API integration
+- Multi-language support (English & Chinese)
+- Automatic language detection from system preferences
 
 This project is production-ready for personal or team use as a production monitoring and note-taking tool.

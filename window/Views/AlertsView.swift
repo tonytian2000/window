@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AlertsView: View {
     @ObservedObject var viewModel: AlertsViewModel
+    @ObservedObject var localization = LocalizationManager.shared
     @State private var showingSettings = false
     
     var body: some View {
@@ -16,7 +17,7 @@ struct AlertsView: View {
                         .font(.system(size: 14))
                 }
                 .buttonStyle(PlainButtonStyle())
-                .help("Refresh alerts")
+                .help(localization.localized("alerts.refresh"))
                 
                 Spacer()
                 
@@ -24,7 +25,7 @@ struct AlertsView: View {
                     Button(action: {
                         viewModel.markAllAsRead()
                     }) {
-                        Text("Mark All Read")
+                        Text(localization.localized("alerts.mark.all.read"))
                             .font(.caption)
                     }
                     .buttonStyle(PlainButtonStyle())
@@ -42,10 +43,10 @@ struct AlertsView: View {
                     Image(systemName: "bell.slash")
                         .font(.system(size: 40))
                         .foregroundColor(.secondary)
-                    Text("No alerts")
+                    Text(localization.localized("alerts.empty.title"))
                         .font(.headline)
                         .foregroundColor(.secondary)
-                    Text("Production alerts will appear here")
+                    Text(localization.localized("alerts.empty.subtitle"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -138,10 +139,10 @@ struct AlertRow: View {
             }
         }
         .contextMenu {
-            Button(alert.isRead ? "Mark as Unread" : "Mark as Read") {
+            Button(alert.isRead ? LocalizationManager.shared.localized("alert.mark.unread") : LocalizationManager.shared.localized("alert.mark.read")) {
                 viewModel.markAsRead(alert)
             }
-            Button("Delete") {
+            Button(LocalizationManager.shared.localized("alert.delete")) {
                 viewModel.deleteAlert(alert)
             }
         }

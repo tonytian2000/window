@@ -2,16 +2,34 @@ import SwiftUI
 
 struct SettingsView: View {
     @ObservedObject var settings = AppSettings.shared
+    @ObservedObject var localization = LocalizationManager.shared
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
+                // Language Settings
+                GroupBox(label: Label(localization.localized("settings.language"), systemImage: "globe")) {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Picker(localization.localized("settings.language.select"), selection: $localization.currentLanguage) {
+                            ForEach(LocalizationManager.Language.allCases, id: \.rawValue) { language in
+                                Text(language.displayName).tag(language.rawValue)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        
+                        Text("Language changes take effect immediately")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.vertical, 4)
+                }
+                
                 // Window Size Settings
-                GroupBox(label: Label("Window Size", systemImage: "rectangle.resize")) {
+                GroupBox(label: Label(localization.localized("settings.window"), systemImage: "rectangle.resize")) {
                     VStack(alignment: .leading, spacing: 12) {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
-                                Text("Width")
+                                Text(localization.localized("settings.window") + " " + "Width")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                 Spacer()
@@ -27,7 +45,7 @@ struct SettingsView: View {
                         
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
-                                Text("Height")
+                                Text(localization.localized("settings.window") + " " + "Height")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                 Spacer()
@@ -86,7 +104,7 @@ struct SettingsView: View {
                 
                 // Version info
                 VStack(spacing: 4) {
-                    Text("Window v1.0.0")
+                    Text(localization.localized("app.title") + " v1.0.0")
                         .font(.caption2)
                         .foregroundColor(.secondary)
                     Text("Menu bar app for production monitoring and notes")
