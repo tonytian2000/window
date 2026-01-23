@@ -3,12 +3,10 @@ import Foundation
 class AlertService {
     static let shared = AlertService()
     
-    private let storageService = StorageService.shared
-    
     private init() {}
     
     func fetchAlerts(completion: @escaping ([Alert]) -> Void) {
-        let settings = storageService.loadSettings()
+        let settings = AppSettings.shared
         
         // Check if endpoint is configured
         guard !settings.apiEndpoint.isEmpty else {

@@ -20,14 +20,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         if let button = statusItem?.button {
-            button.image = NSImage(systemSymbolName: "bell.fill", accessibilityDescription: "Window")
+            button.image = NSImage(systemSymbolName: "macwindow", accessibilityDescription: "Window")
             button.action = #selector(togglePanel)
             button.target = self
         }
         
         // Create the panel with Itsycal-style appearance
         let panel = WindowPanel(
-            contentRect: NSRect(x: 0, y: 0, width: 360, height: 500),
+            contentRect: NSRect(x: 0, y: 0, width: 450, height: 500),
             styleMask: [.borderless],
             backing: .buffered,
             defer: false

@@ -2,8 +2,10 @@ import SwiftUI
 
 struct AlertsView: View {
     @ObservedObject var viewModel: AlertsViewModel
+    @State private var showingSettings = false
     
     var body: some View {
+        ZStack(alignment: .bottomTrailing) {
         VStack(spacing: 0) {
             // Toolbar
             HStack {
@@ -58,6 +60,21 @@ struct AlertsView: View {
                     }
                 }
             }
+        }
+        
+        // Config button at bottom right
+        Button(action: { showingSettings = true }) {
+            Image(systemName: "gearshape.fill")
+                .foregroundColor(.secondary)
+                .padding(8)
+        }
+        .buttonStyle(PlainButtonStyle())
+        .background(Color(NSColor.controlBackgroundColor))
+        .cornerRadius(8)
+        .padding(8)
+        }
+        .sheet(isPresented: $showingSettings) {
+            AlertSettingsView()
         }
     }
 }

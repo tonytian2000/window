@@ -13,4 +13,12 @@ class WindowPanel: NSPanel {
     override var acceptsFirstResponder: Bool {
         return true
     }
+    
+    override func resignKey() {
+        super.resignKey()
+        // Don't hide if there's a sheet or child window open
+        if sheets.isEmpty && childWindows?.isEmpty ?? true {
+            close()
+        }
+    }
 }

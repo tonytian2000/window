@@ -1,223 +1,371 @@
-# CLAUDE.md - Window Menu Bar Application
+# Window - macOS Menu Bar Monitoring App
 
 ## Project Overview
 
-**Window** is a macOS menu bar application designed to provide quick access to production environment alerts and personal note-taking capabilities. The application sits in the macOS menu bar and displays a compact window when clicked, serving as both a monitoring dashboard and a productivity tool.
+Window is a lightweight macOS menu bar application designed to display production alerts and serve as a quick note-taking tool for daily work. It provides an elegant, Itsycal-style borderless panel interface that appears when clicking the menu bar icon.
 
-## Purpose
+## Architecture
 
-This application addresses two primary use cases:
+### Platform & Framework
+- **Platform**: macOS 12.0+
+- **Framework**: SwiftUI
+- **Language**: Swift 5.0
+- **Build System**: Xcode project
 
-1. **Production Monitoring**: Display real-time alerts and messages from production environments, allowing developers and operations teams to stay informed without constantly checking dashboards or terminals.
+### Project Structure
 
-2. **Daily Work Notes**: Provide a quick, accessible location for recording short notes, tasks, and reminders throughout the workday.
+```
+window/
+├── WindowApp.swift          # Main app entry point with menu bar integration
+├── WindowPanel.swift        # Custom NSPanel for keyboard input support
+├── Info.plist              # App configuration
+├── Views/
+│   ├── ContentView.swift        # Main view with left sidebar navigation
+│   ├── AlertsView.swift         # Production alerts display
+│   ├── NotesView.swift          # Quick notes interface
+│   ├── SettingsView.swift       # General app settings
+│   ├── AlertSettingsView.swift  # Alert-specific settings (modal)
+│   └── NotesSettingsView.swift  # Notes-specific settings (modal)
+├── Models/
+│   ├── Alert.swift         # Alert data model
+│   ├── Note.swift          # Note data model
+│   └── AppSettings.swift   # Settings singleton with UserDefaults
+├── ViewModels/
+│   ├── AlertsViewModel.swift    # Alerts business logic
+│   └── NotesViewModel.swift     # Notes business logic
+└── Services/
+    ├── StorageService.swift     # Data persistence
+    └── AlertService.swift       # API integration for alerts
+```
 
 ## Key Features
 
-### Core Functionality
-- **Menu Bar Integration**: Native macOS menu bar icon that remains accessible at all times
-- **Popup Window**: Compact, non-intrusive window that appears below the menu bar icon when clicked,the layout of window is three sections in vertical. the top is the title and some small controls. the middle occupy most space and show the main application content. the buttom show main controls that config or control the application. there is configuration for the window, such as size, color, font.
-- **Application Alert Display**: Shows notifications and alerts from production environments
-- **Application Note Recording**: Quick note-taking interface for daily work items
-- **Persistent Storage**: Saves notes and alert history locally
+### 1. Menu Bar Integration
+- Lives in the macOS menu bar with a bell icon
+- Click icon to show/hide the panel
+- Itsycal-style borderless window with shadow
+- 360x500px compact interface
+- Dismisses when clicking outside
 
-### Technical Characteristics
-- **Platform**: macOS native application
+### 2. Production Alerts
+- Fetches alerts from configurable API endpoint
+- Supports custom API keys (Bearer token authentication)
+- Real-time alert monitoring with auto-refresh
+- Alert types: Error (red), Warning (orange), Info (blue)
+- Mark as read/unread functionality
+- Badge counter for unread alerts on menu bar icon
+- Configurable refresh interval (1-30 minutes)
+- Alert type filtering options
 
-- **UI Pattern**: Menu bar app with dropdown window (similar to system notifications). Menu bar can choose is small icon or a bar can display some information.
-- **Always Available**: Runs in background, minimal resource usage
-- **Quick Access**: Single-click access to information and note-taking
+### 3. Quick Notes
+- Fast note-taking interface with auto-focus
+- Optional categorization with visual badges
+- Full-text search across all notes
+- Edit/delete notes with hover actions
+- Markdown export to Documents folder
+- Persistent storage via UserDefaults
+- Configurable retention limits (10-500 notes)
 
-## Technology Stack
+### 4. Settings System
+- **General Settings Tab**: Global app configuration in left sidebar
+  - API endpoint configuration
+  - API key management
+  - Refresh interval
+  - Notifications toggle
+  - API format documentation
+  
+- **Alert Settings Modal**: Accessible via gear icon in Alerts view
+  - API endpoint and key
+  - Auto-refresh toggle
+  - Refresh interval slider
+  - Alert type filters (errors, warnings, info)
+  
+- **Notes Settings Modal**: Accessible via gear icon in Notes view
+  - Default category
+  - Timestamp display toggle
+  - Category display toggle
+  - Auto-focus behavior
+  - Maximum notes retention
 
+### 5. User Interface
+- **Left Sidebar Navigation** (80px wide)
+  - Icon-based tabs with labels
+  - Badge counter on Alerts icon
+  - Active tab highlighting with blue accent
+  - Icons: bell (Alerts), note (Notes), gear (Settings)
+  
+- **Content Area** (280px wide)
+  - Scrollable views
+  - Consistent styling across tabs
+  - Modal sheets for app-specific settings
+  - Auto-saving for all settings
 
-### Expected Technologies
-- **Language**: Swift (recommended for macOS development)
-- **UI Framework**: SwiftUI or AppKit
-- **Menu Bar Integration**: NSStatusBar / NSStatusItem
-- **Data Persistence**: UserDefaults, Core Data, or local file storage
-- **Network**: URLSession for production environment monitoring
-- **Notifications**: User Notifications framework for alerts
+## Technical Implementation
 
-## Project Structure
-Need split the framework with the concrete application. 
-Framework is common, that define how to create the top menu and pop up the window when click the top mene.
-Application can be mutliple, such as application for alert display, application for short note. you can switch the application according to the configuration. if multiple applications are enabled, you can use the tab to switch the application in the window.
+### Custom Window Panel
+```swift
+class WindowPanel: NSPanel {
+    override var canBecomeKey: Bool { return true }
+    override var canBecomeMain: Bool { return true }
+    override var acceptsFirstResponder: Bool { return true }
+}
 ```
-window/
-├── .gitignore              # Git ignore rules
-├── README.md              # Project readme
-├── CLAUDE.md             # This file - AI assistant documentation
-├── window/               # Main application code (to be created)
-│   ├── App/              # Application entry point
-│   ├── Views/            # UI components
-│   │   ├── MenuBarView/  # Menu bar icon and window
-│   │   ├── AlertsView/   # Production alerts display
-│   │   └── NotesView/    # Note-taking interface
-│   ├── Models/           # Data models
-│   ├── Services/         # API clients, storage services
-│   └── Resources/        # Assets, icons, configurations
-└── window.xcodeproj/     # Xcode project file (to be created)
+This custom panel enables keyboard input in the borderless panel window, solving the issue where TextEditor and TextField wouldn't accept input in a standard NSPanel with borderless style.
+
+### Settings Architecture
+Settings are managed through a singleton `AppSettings` class that uses `@Published` properties with automatic UserDefaults persistence:
+
+```swift
+class AppSettings: ObservableObject {
+    static let shared = AppSettings()
+    
+    @Published var apiEndpoint: String {
+        didSet { UserDefaults.standard.set(apiEndpoint, forKey: "apiEndpoint") }
+    }
+    
+    private init() {
+        self.apiEndpoint = UserDefaults.standard.string(forKey: "apiEndpoint") ?? ""
+        // ... load other settings
+    }
+}
 ```
 
-## Development Setup
+All settings auto-save to UserDefaults when changed, providing a seamless user experience.
 
-### Prerequisites
+### Data Persistence
+- **Alerts & Notes**: JSON encoding to UserDefaults via StorageService
+- **Settings**: Direct UserDefaults via AppSettings singleton with didSet observers
+- **Notes Export**: Markdown files exported to ~/Documents with timestamp
+
+## API Integration
+
+### Expected Alert JSON Format
+```json
+[
+  {
+    "title": "Error title",
+    "message": "Error description",
+    "type": "error|warning|info",
+    "timestamp": "2026-01-22T12:00:00Z",
+    "source": "Production"
+  }
+]
+```
+
+Alternative wrapper format also supported:
+```json
+{
+  "alerts": [
+    { /* alert object */ }
+  ]
+}
+```
+
+### HTTP Request
+- Method: GET
+- Headers: `Authorization: Bearer {apiKey}` (if configured)
+- Timeout: 10 seconds
+- Response: JSON array or JSON object with "alerts" key
+
+## Development
+
+### Build Requirements
 - macOS 12.0 or later
 - Xcode 14.0 or later
-- Apple Developer account (for distribution)
+- Swift 5.0 or later
 
-### Getting Started
-1. Clone the repository
-2. Open the project in Xcode
-3. Configure signing & capabilities
-4. Build and run the application
-5. Grant necessary permissions (notifications, network access)
+### Building the Project
+```bash
+# Open in Xcode
+open Window.xcodeproj
 
-## Feature Details
+# Or use convenience script
+./open-in-xcode.sh
 
-### 1. Production Environment Monitoring
-- **Alert Sources**: Configurable endpoints for production monitoring
-- **Real-time Updates**: Periodic polling or webhook-based updates
-- **Alert Types**: Errors, warnings, info messages
-- **Visual Indicators**: Badge count on menu bar icon for unread alerts
-- **Alert History**: View and search past alerts
+# Build from command line
+xcodebuild -project Window.xcodeproj -scheme Window -configuration Debug build
+```
 
-### 2. Note Recording
-- **Quick Entry**: Fast text input for capturing thoughts and tasks
-- **Categories**: Optional tagging or categorization
-- **Timestamps**: Automatic time tracking for each note
-- **Search**: Quick search through note history
-- **Export**: Ability to export notes to text files
+### Running the App
+1. Build the project in Xcode (⌘+R)
+2. The bell icon appears in the menu bar
+3. Click to open the panel
+4. Configure API settings before monitoring alerts
+5. Start adding notes immediately
 
-## User Interface
+## User Workflows
 
-### Menu Bar Icon
-- Minimal, clean design
-- Badge indicator for unread alerts
-- Click to toggle window display
+### Adding Notes
+1. Click bell icon in menu bar
+2. Switch to Notes tab (or already selected)
+3. Type note in text editor (auto-focused)
+4. Optionally add category
+5. Click + button to save
+6. Note appears in list below with timestamp
+7. Hover over notes to edit or delete
 
-### Panel Window (Itsycal-Style)
-- Borderless NSPanel with rounded corners
-- Clean, modern appearance with subtle shadow
-- Positioned directly below menu bar icon
-- Floats above all other windows
-- Non-activating panel (doesn't steal focus)
-- Tabs or sections for:
-  - Production Alerts
-  - Daily Notes
-  - Settings
-- Compact size (360px wide, 500px tall)
-- Dark mode support
-- Smooth animation behavior
+### Monitoring Alerts
+1. Open Settings tab
+2. Configure API endpoint (e.g., `https://api.example.com/alerts`)
+3. Optionally add API key
+4. Switch to Alerts tab
+5. Click refresh button or wait for auto-refresh
+6. View alerts by severity (color-coded)
+7. Click alert to mark as read
+8. Badge on menu bar icon shows unread count
+
+### Configuring Alert Monitoring
+1. Open Alerts tab
+2. Click gear icon (top right)
+3. Modal sheet opens with alert settings
+4. Configure API endpoint and key
+5. Set refresh interval (1-30 minutes)
+6. Toggle auto-refresh
+7. Filter alert types (errors, warnings, info)
+8. Settings auto-save on change
+9. Close sheet to return to alerts
+
+### Searching Notes
+1. Open Notes tab
+2. Type search query in search bar
+3. Notes filter in real-time
+4. Clear search to show all notes
+
+### Exporting Notes
+1. Open Notes tab
+2. Click "Export Notes" button at bottom
+3. Markdown file created in Documents folder
+4. Finder opens to show the file
+5. File named `window-notes-{timestamp}.md`
+
+## Design Patterns
+
+1. **MVVM Architecture**: Clear separation between Views, ViewModels, and Models
+2. **Singleton Pattern**: Services (StorageService, AlertService) and Settings use shared instances
+3. **Observer Pattern**: SwiftUI's @Published and @ObservedObject for reactive updates
+4. **Repository Pattern**: StorageService abstracts data persistence details
+5. **Dependency Injection**: ViewModels passed to views, services injected where needed
+
+## Key Implementation Details
+
+### Window Management
+- Uses `NSPanel` with `.nonactivatingPanel` removed to allow key window status
+- Custom `WindowPanel` class provides `canBecomeKey` for keyboard input
+- Window positioned below menu bar icon when shown
+- Dismisses on outside click via `.resignKey()`
+
+### State Management
+- `@StateObject` for view models in parent views
+- `@ObservedObject` when passing to child views
+- `@State` for local UI state
+- `@Published` in models for reactive data
+- `@FocusState` for keyboard focus management
+
+### Navigation
+- Tab-based navigation with left sidebar
+- Modal sheets for app-specific settings
+- Context menus for item actions (right-click)
+- Hover effects for interactive elements
+
+### Styling
+- Consistent use of SF Symbols for icons
+- System colors for semantic meaning (red=error, orange=warning, blue=info/accent)
+- Rounded corners and shadows for depth
+- Subtle backgrounds to differentiate sections
+
+## Files for AI Context
+
+When working with Claude on this project, these files are most relevant:
+
+**Core Application:**
+- `WindowApp.swift` - App entry point and menu bar setup
+- `WindowPanel.swift` - Custom panel class for keyboard input
+
+**Main Views:**
+- `ContentView.swift` - Sidebar navigation and tab switching
+- `AlertsView.swift` - Alerts display and management
+- `NotesView.swift` - Notes creation and editing
+- `SettingsView.swift` - General settings interface
+
+**Settings Views:**
+- `AlertSettingsView.swift` - Alert-specific configuration modal
+- `NotesSettingsView.swift` - Notes-specific configuration modal
+
+**Models:**
+- `AppSettings.swift` - Settings singleton with UserDefaults
+- `Alert.swift` - Alert data model and sample data
+- `Note.swift` - Note data model and sample data
+
+**ViewModels:**
+- `AlertsViewModel.swift` - Alerts business logic
+- `NotesViewModel.swift` - Notes business logic
+
+**Services:**
+- `AlertService.swift` - API integration for fetching alerts
+- `StorageService.swift` - Data persistence layer
+
+**Documentation:**
+- `README.md` - Project overview and quick start
+- `SETUP.md` - Detailed setup instructions
+- `CLAUDE.md` - This file (AI context document)
+
+## Known Behaviors
+
+1. **Auto-saving**: All settings automatically save to UserDefaults on change
+2. **Window Dismissal**: Panel dismisses when clicking outside or pressing Escape
+3. **Keyboard Support**: Full keyboard input works in all text fields (via WindowPanel)
+4. **Sample Data**: If no saved data exists, sample alerts and notes are displayed
+5. **Error Handling**: Network errors gracefully handled, user sees empty state
+6. **Refresh Behavior**: Manual refresh always works; auto-refresh uses configured interval
+
+## Future Enhancement Ideas
+
+- Push notifications for critical alerts
+- Alert history and archiving
+- Note synchronization across devices
+- Custom alert sound/badge options
 - Keyboard shortcuts for quick actions
-
-## Configuration
-
-### Settings Options
-- **Production Endpoints**: Configure API endpoints for monitoring
-- **Refresh Interval**: Set polling frequency for alerts
-- **Notification Preferences**: Choose which alerts trigger system notifications
-- **Note Storage**: Configure local storage location
-- **Appearance**: Toggle dark/light mode, window size preferences
-
-## Security Considerations
-
-- **API Keys**: Secure storage of production environment credentials (Keychain)
-- **Network Security**: HTTPS only for production endpoints
-- **Data Privacy**: Notes stored locally, not transmitted
-- **Permissions**: Request only necessary macOS permissions
-
-## Future Enhancements
-
-### Planned Features
-- **Multiple Environments**: Support for dev, staging, and production
-- **Integrations**: Slack, email, or other notification channels
-- **Rich Text Notes**: Support for formatting, links, and attachments
-- **Cloud Sync**: Optional sync of notes across devices
-- **Custom Alert Rules**: Filter and customize alert conditions
-- **Analytics**: Track alert patterns and note-taking habits
-
-### Technical Improvements
-- **Widget Support**: macOS widget for quick glance
-- **Menu Bar Customization**: Different icon states based on alert severity
-- **Keyboard Shortcuts**: Global hotkeys for quick access
-- **Export/Import**: Backup and restore settings and data
-
-## Development Guidelines
-
-### Code Style
-- Follow Swift API Design Guidelines
-- Use SwiftLint for code quality
-- Document public APIs with inline documentation
-- Write unit tests for business logic
-
-### Version Control
-- Use semantic versioning
-- Meaningful commit messages
-- Feature branches for new development
-- Pull requests for code review
-
-### Testing
-- Unit tests for models and services
-- UI tests for critical user flows
-- Manual testing on different macOS versions
-- Beta testing before releases
+- Note tagging system beyond categories
+- Alert acknowledgment workflow
+- Multiple API endpoint support
+- Rich text notes formatting
+- Note attachments or links
 
 ## Troubleshooting
 
-### Common Issues
-- **Menu bar icon not showing**: Check app permissions and system preferences
-- **Alerts not updating**: Verify network connectivity and API endpoints
-- **Notes not saving**: Check file system permissions
-- **Window position incorrect**: Reset preferences in settings
+**Window doesn't show keyboard focus:**
+- Ensure using `WindowPanel` class, not standard `NSPanel`
+- Check that `canBecomeKey` returns true
 
-## Contributing
+**Alerts not loading:**
+- Verify API endpoint is correctly configured
+- Check API key if authentication required
+- Look for errors in console logs
+- Ensure API returns correct JSON format
 
-When contributing to this project:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes with clear commits
-4. Test thoroughly on macOS
-5. Submit a pull request with description
+**Settings not persisting:**
+- Settings should auto-save via UserDefaults
+- Check that AppSettings.shared is being used
+- Verify UserDefaults aren't being cleared
 
-## Resources
+**Build errors:**
+- Ensure macOS deployment target is 12.0+
+- Verify all files are in Xcode project
+- Check Swift version compatibility (5.0+)
 
-### macOS Development
-- [Apple Human Interface Guidelines - Menu Bar Extras](https://developer.apple.com/design/human-interface-guidelines/menu-bar-extras)
-- [NSStatusBar Documentation](https://developer.apple.com/documentation/appkit/nsstatusbar)
-- [SwiftUI Tutorials](https://developer.apple.com/tutorials/swiftui)
+## Project Status
 
-### Similar Projects
-- Study other menu bar apps for UX patterns
-- Research best practices for non-intrusive notifications
-- Explore efficient polling and caching strategies
+✅ **Completed Features:**
+- Menu bar integration with icon and badge
+- Borderless panel with keyboard input support
+- Left sidebar navigation
+- Production alerts monitoring
+- Quick notes with search and export
+- General settings interface
+- App-specific settings modals
+- Auto-saving configuration
+- Full MVVM architecture
+- Data persistence
+- API integration
 
-## License
-
-[To be determined based on project requirements]
-
-## Contact & Support
-
-[To be added - project maintainer contact information]
-
----
-
-## AI Assistant Notes
-
-This documentation is designed to help AI assistants (like Claude) understand the project context and assist with development tasks. When working on this project:
-
-- **Architecture**: This is a native macOS application using menu bar pattern
-- **User Experience**: Focus on minimalism and quick access
-- **Performance**: Keep resource usage low as it runs continuously
-- **Reliability**: Handle network failures gracefully for production monitoring
-- **Data Safety**: Protect user notes and credentials properly
-
-### Common Tasks
-- Creating the Xcode project structure
-- Implementing menu bar integration with NSStatusBar
-- Building the popup window UI with SwiftUI or AppKit
-- Setting up network layer for production monitoring
-- Implementing local storage for notes
-- Adding notification support
-- Configuring app icons and assets
+This project is production-ready for personal or team use as a production monitoring and note-taking tool.

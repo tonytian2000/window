@@ -5,7 +5,6 @@ class StorageService {
     
     private let alertsKey = "window.alerts"
     private let notesKey = "window.notes"
-    private let settingsKey = "window.settings"
     
     private let fileManager = FileManager.default
     private var documentsDirectory: URL {
@@ -64,30 +63,8 @@ class StorageService {
         }
     }
     
-    // MARK: - Settings Storage
-    
-    func saveSettings(_ settings: AppSettings) {
-        do {
-            let data = try JSONEncoder().encode(settings)
-            UserDefaults.standard.set(data, forKey: settingsKey)
-        } catch {
-            print("Failed to save settings: \(error)")
-        }
-    }
-    
-    func loadSettings() -> AppSettings {
-        guard let data = UserDefaults.standard.data(forKey: settingsKey) else {
-            return AppSettings()
-        }
-        
-        do {
-            let settings = try JSONDecoder().decode(AppSettings.self, from: data)
-            return settings
-        } catch {
-            print("Failed to load settings: \(error)")
-            return AppSettings()
-        }
-    }
+    // MARK: - Settings
+    // Settings are now handled directly by AppSettings.shared using UserDefaults
     
     // MARK: - Export Notes
     
