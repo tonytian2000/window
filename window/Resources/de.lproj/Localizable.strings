@@ -1,0 +1,104 @@
+/* Main App */
+"app.title" = "Window";
+
+/* Menu Bar */
+"menu.quit" = "Window beenden";
+
+/* Content View - Tabs */
+"tab.alerts" = "Benachrichtigungen";
+"tab.notes" = "Notizen";
+
+/* Alerts View */
+"alerts.title" = "Produktionsbenachrichtigungen";
+"alerts.empty.icon" = "bell.slash";
+"alerts.empty.title" = "Keine Benachrichtigungen";
+"alerts.empty.subtitle" = "Produktionsbenachrichtigungen werden hier angezeigt";
+"alerts.search.placeholder" = "Benachrichtigungen suchen...";
+"alerts.test" = "Test-Benachrichtigung";
+"alerts.settings" = "Benachrichtigungseinstellungen";
+"alerts.clear.all" = "Alle löschen";
+"alerts.refresh" = "Benachrichtigungen aktualisieren";
+"alerts.mark.all.read" = "Alle als gelesen markieren";
+
+/* Alert Row */
+"alert.acknowledge" = "Bestätigen";
+"alert.delete" = "Löschen";
+"alert.mark.read" = "Als gelesen markieren";
+"alert.mark.unread" = "Als ungelesen markieren";
+
+/* Alert Settings */
+"alert.settings.title" = "Benachrichtigungseinstellungen";
+"alert.settings.check.interval" = "Prüfintervall";
+"alert.settings.minutes" = "Minuten";
+"alert.settings.endpoint" = "API-Endpunkt";
+"alert.settings.endpoint.placeholder" = "https://api.example.com/alerts";
+"alert.settings.test.connection" = "Verbindung testen";
+"alert.settings.save" = "Speichern";
+"alert.settings.cancel" = "Abbrechen";
+
+/* Notes View */
+"notes.editor" = "Editor";
+"notes.history" = "Verlauf";
+"notes.category.placeholder" = "Kategorie (optional)";
+"notes.content.placeholder" = "Schreiben Sie hier Ihre Notiz...";
+"notes.save" = "Speichern";
+"notes.search.placeholder" = "Notizen suchen...";
+"notes.empty.title" = "Noch keine Notizen";
+"notes.empty.subtitle" = "Fügen Sie Ihre erste Notiz im Editor hinzu";
+"notes.search.empty.title" = "Keine passenden Notizen";
+"notes.search.empty.subtitle" = "Versuchen Sie einen anderen Suchbegriff";
+"notes.settings" = "Notizeneinstellungen";
+"notes.export" = "Notizen exportieren";
+
+/* Note Row */
+"note.edit" = "Bearbeiten";
+"note.delete" = "Löschen";
+
+/* Notes Settings */
+"notes.settings.title" = "Notizeneinstellungen";
+"notes.settings.default.category" = "Standardkategorie";
+"notes.settings.default.category.placeholder" = "Arbeit";
+"notes.settings.auto.timestamp" = "Zeitstempel automatisch hinzufügen";
+"notes.settings.save.location" = "Speicherort";
+"notes.settings.choose" = "Auswählen...";
+"notes.settings.save" = "Speichern";
+"notes.settings.cancel" = "Abbrechen";
+
+/* Settings View */
+"settings.title" = "Einstellungen";
+"settings.appearance" = "Erscheinungsbild";
+"settings.language" = "Sprache";
+"settings.language.select" = "Sprache auswählen";
+"settings.language.info" = "Sprachänderungen werden sofort wirksam";
+"settings.theme" = "Design";
+"settings.theme.picker" = "Erscheinungsbild";
+"settings.theme.system" = "System";
+"settings.theme.light" = "Hell";
+"settings.theme.dark" = "Dunkel";
+"settings.theme.info" = "Wählen Sie Ihr bevorzugtes Design";
+"settings.background" = "Hintergrund";
+"settings.background.colors" = "Beliebte Farben";
+"settings.background.info" = "Hintergrundfarbänderungen werden sofort angewendet";
+"settings.window" = "Fenster";
+"settings.window.width" = "Breite";
+"settings.window.height" = "Höhe";
+"settings.window.info" = "Fenstergrößenänderungen werden sofort angewendet";
+"settings.startup" = "Beim Anmelden starten";
+"settings.notifications" = "Benachrichtigungen";
+"settings.sound" = "Tonbenachrichtigungen";
+"settings.badge" = "Menüleisten-Badge";
+"settings.about" = "Über";
+"settings.version" = "Version";
+"settings.close" = "Schließen";
+"settings.auto.save.info" = "Einstellungen werden automatisch gespeichert";
+
+/* General */
+"general.ok" = "OK";
+"general.cancel" = "Abbrechen";
+"general.save" = "Speichern";
+"general.delete" = "Löschen";
+"general.edit" = "Bearbeiten";
+"general.done" = "Fertig";
+"general.loading" = "Lädt...";
+"general.error" = "Fehler";
+"general.success" = "Erfolg";

@@ -16,11 +16,24 @@ class LocalizationManager: ObservableObject {
     enum Language: String, CaseIterable {
         case english = "en"
         case chinese = "zh-Hans"
+        case japanese = "ja"
+        case german = "de"
         
         var displayName: String {
             switch self {
             case .english: return "English"
             case .chinese: return "简体中文"
+            case .japanese: return "日本語"
+            case .german: return "Deutsch"
+            }
+        }
+        
+        var flag: String {
+            switch self {
+            case .english: return "🇬🇧"
+            case .chinese: return "🇨🇳"
+            case .japanese: return "🇯🇵"
+            case .german: return "🇩🇪"
             }
         }
     }
@@ -34,8 +47,16 @@ class LocalizationManager: ObservableObject {
         } else {
             // Detect system language
             let preferredLanguages = Locale.preferredLanguages
-            if preferredLanguages.first?.hasPrefix("zh") == true {
-                self.currentLanguage = Language.chinese.rawValue
+            if let firstLang = preferredLanguages.first {
+                if firstLang.hasPrefix("zh") {
+                    self.currentLanguage = Language.chinese.rawValue
+                } else if firstLang.hasPrefix("ja") {
+                    self.currentLanguage = Language.japanese.rawValue
+                } else if firstLang.hasPrefix("de") {
+                    self.currentLanguage = Language.german.rawValue
+                } else {
+                    self.currentLanguage = Language.english.rawValue
+                }
             } else {
                 self.currentLanguage = Language.english.rawValue
             }

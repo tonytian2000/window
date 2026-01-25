@@ -118,6 +118,7 @@ struct RichTextEditor: NSViewRepresentable {
 struct RichTextToolbar: View {
     let textView: NSTextView?
     @ObservedObject var localization = LocalizationManager.shared
+    @ObservedObject var settings = AppSettings.shared
     
     var body: some View {
         HStack(spacing: 8) {
@@ -158,7 +159,7 @@ struct RichTextToolbar: View {
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 6)
-        .background(Color.white.opacity(0.5))
+        .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
     }
     
     private func toggleBold() {
@@ -425,15 +426,17 @@ struct RichTextToolbar: View {
 struct ToolbarButton: View {
     let icon: String
     let action: () -> Void
+    @ObservedObject var settings = AppSettings.shared
     
     var body: some View {
         Button(action: action) {
             Image(systemName: icon)
                 .font(.system(size: 14))
+                .foregroundColor(.secondary)
                 .frame(width: 24, height: 24)
         }
         .buttonStyle(PlainButtonStyle())
-        .background(Color.white.opacity(0.5))
+        .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
         .cornerRadius(4)
     }
 }
@@ -441,6 +444,7 @@ struct ToolbarButton: View {
 struct ColorPickerButton: View {
     let textView: NSTextView?
     @ObservedObject var localization: LocalizationManager
+    @ObservedObject var settings = AppSettings.shared
     @State private var showingColorPicker = false
     @State private var selectedColor: Color = .black
     
@@ -462,13 +466,15 @@ struct ColorPickerButton: View {
             HStack(spacing: 4) {
                 Image(systemName: "paintbrush.fill")
                     .font(.system(size: 14))
+                    .foregroundColor(.secondary)
                 Image(systemName: "chevron.down")
                     .font(.system(size: 10))
+                    .foregroundColor(.secondary)
             }
             .frame(width: 40, height: 24)
         }
         .buttonStyle(PlainButtonStyle())
-        .background(Color.white.opacity(0.5))
+        .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
         .cornerRadius(4)
     }
     

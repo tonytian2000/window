@@ -1,0 +1,104 @@
+/* Main App */
+"app.title" = "Window";
+
+/* Menu Bar */
+"menu.quit" = "Windowを終了";
+
+/* Content View - Tabs */
+"tab.alerts" = "アラート";
+"tab.notes" = "ノート";
+
+/* Alerts View */
+"alerts.title" = "本番環境アラート";
+"alerts.empty.icon" = "bell.slash";
+"alerts.empty.title" = "アラートはありません";
+"alerts.empty.subtitle" = "本番環境のアラートがここに表示されます";
+"alerts.search.placeholder" = "アラートを検索...";
+"alerts.test" = "テストアラート";
+"alerts.settings" = "アラート設定";
+"alerts.clear.all" = "すべてクリア";
+"alerts.refresh" = "アラートを更新";
+"alerts.mark.all.read" = "すべて既読にする";
+
+/* Alert Row */
+"alert.acknowledge" = "確認済み";
+"alert.delete" = "削除";
+"alert.mark.read" = "既読にする";
+"alert.mark.unread" = "未読にする";
+
+/* Alert Settings */
+"alert.settings.title" = "アラート設定";
+"alert.settings.check.interval" = "チェック間隔";
+"alert.settings.minutes" = "分";
+"alert.settings.endpoint" = "APIエンドポイント";
+"alert.settings.endpoint.placeholder" = "https://api.example.com/alerts";
+"alert.settings.test.connection" = "接続テスト";
+"alert.settings.save" = "保存";
+"alert.settings.cancel" = "キャンセル";
+
+/* Notes View */
+"notes.editor" = "エディタ";
+"notes.history" = "履歴";
+"notes.category.placeholder" = "カテゴリ（任意）";
+"notes.content.placeholder" = "ここにノートを書いてください...";
+"notes.save" = "保存";
+"notes.search.placeholder" = "ノートを検索...";
+"notes.empty.title" = "ノートはまだありません";
+"notes.empty.subtitle" = "エディタで最初のノートを追加";
+"notes.search.empty.title" = "一致するノートがありません";
+"notes.search.empty.subtitle" = "別の検索ワードを試してください";
+"notes.settings" = "ノート設定";
+"notes.export" = "ノートをエクスポート";
+
+/* Note Row */
+"note.edit" = "編集";
+"note.delete" = "削除";
+
+/* Notes Settings */
+"notes.settings.title" = "ノート設定";
+"notes.settings.default.category" = "デフォルトカテゴリ";
+"notes.settings.default.category.placeholder" = "仕事";
+"notes.settings.auto.timestamp" = "タイムスタンプを自動追加";
+"notes.settings.save.location" = "保存場所";
+"notes.settings.choose" = "選択...";
+"notes.settings.save" = "保存";
+"notes.settings.cancel" = "キャンセル";
+
+/* Settings View */
+"settings.title" = "設定";
+"settings.appearance" = "外観";
+"settings.language" = "言語";
+"settings.language.select" = "言語を選択";
+"settings.language.info" = "言語の変更は即座に反映されます";
+"settings.theme" = "テーマ";
+"settings.theme.picker" = "外観";
+"settings.theme.system" = "システム";
+"settings.theme.light" = "ライト";
+"settings.theme.dark" = "ダーク";
+"settings.theme.info" = "お好みのテーマを選択してください";
+"settings.background" = "背景";
+"settings.background.colors" = "人気の色";
+"settings.background.info" = "背景色の変更は即座に適用されます";
+"settings.window" = "ウィンドウ";
+"settings.window.width" = "幅";
+"settings.window.height" = "高さ";
+"settings.window.info" = "ウィンドウサイズの変更は即座に適用されます";
+"settings.startup" = "ログイン時に起動";
+"settings.notifications" = "通知";
+"settings.sound" = "サウンドアラート";
+"settings.badge" = "メニューバーバッジ";
+"settings.about" = "について";
+"settings.version" = "バージョン";
+"settings.close" = "閉じる";
+"settings.auto.save.info" = "設定は自動的に保存されます";
+
+/* General */
+"general.ok" = "OK";
+"general.cancel" = "キャンセル";
+"general.save" = "保存";
+"general.delete" = "削除";
+"general.edit" = "編集";
+"general.done" = "完了";
+"general.loading" = "読み込み中...";
+"general.error" = "エラー";
+"general.success" = "成功";

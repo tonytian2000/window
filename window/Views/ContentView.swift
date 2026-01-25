@@ -7,6 +7,7 @@ struct ContentView: View {
     @StateObject private var alertsViewModel = AlertsViewModel()
     @StateObject private var notesViewModel = NotesViewModel()
     @ObservedObject var localization = LocalizationManager.shared
+    @ObservedObject var settings = AppSettings.shared
     
     var body: some View {
         HStack(spacing: 0) {
@@ -19,25 +20,24 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                Divider()
-                    .padding(.horizontal, 8)
+                
                 
                 // App icon at bottom
                 if let nsImage = NSImage(named: "win") {
                     Image(nsImage: nsImage)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 32, height: 32)
+                        .frame(width: 18, height: 18)
                         .padding(.vertical, 12)
                 } else {
                     Image(systemName: "square.fill")
-                        .font(.system(size: 24))
+                        .font(.system(size: 18))
                         .foregroundColor(.accentColor)
                         .padding(.vertical, 12)
                 }
             }
             .frame(width: 50)
-            .background(Color.white.opacity(0.95))
+            .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.95))
             
             Divider()
             
@@ -52,9 +52,10 @@ struct ContentView: View {
                 }
             }
         }
-        .frame(width: 450, height: 500)
-        .background(Color.white)
+        .frame(width: CGFloat(settings.windowWidth), height: CGFloat(settings.windowHeight))
+        .background(backgroundColorFromString(settings.backgroundColor))
         .cornerRadius(10)
+        .preferredColorScheme(settings.theme == "dark" ? .dark : .light)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
                 .stroke(Color.black.opacity(0.1), lineWidth: 0.5)
@@ -72,6 +73,48 @@ struct ContentView: View {
         if let url = StorageService.shared.exportNotesToFile(content) {
             NSWorkspace.shared.activateFileViewerSelecting([url])
         }
+    }
+    
+    private func backgroundColorFromString(_ colorName: String) -> Color {
+        // Dark theme always uses black background
+        if settings.theme == "dark" {
+            return .black
+        }
+        
+        // Light theme uses selected background color
+        switch colorName {
+        case "white": return .white
+        case "lightGray": return Color(white: 0.95)
+        case "beige": return Color(red: 0.96, green: 0.96, blue: 0.86)
+        case "lightBlue": return Color(red: 0.93, green: 0.95, blue: 1.0)
+        case "lightGreen": return Color(red: 0.93, green: 1.0, blue: 0.93)
+        case "lightPink": return Color(red: 1.0, green: 0.94, blue: 0.96)
+        case "lightYellow": return Color(red: 1.0, green: 1.0, blue: 0.88)
+        case "lavender": return Color(red: 0.95, green: 0.95, blue: 1.0)
+        default: return .white
+        }
+    }
+    
+    // Helper function to get adaptive background color for all components
+    static func adaptiveBackgroundColor(theme: String, backgroundColor: String, opacity: Double = 1.0) -> Color {
+        if theme == "dark" {
+            return Color.black.opacity(opacity * 0.3)
+        }
+        
+        let baseColor: Color
+        switch backgroundColor {
+        case "white": baseColor = .white
+        case "lightGray": baseColor = Color(white: 0.95)
+        case "beige": baseColor = Color(red: 0.96, green: 0.96, blue: 0.86)
+        case "lightBlue": baseColor = Color(red: 0.93, green: 0.95, blue: 1.0)
+        case "lightGreen": baseColor = Color(red: 0.93, green: 1.0, blue: 0.93)
+        case "lightPink": baseColor = Color(red: 1.0, green: 0.94, blue: 0.96)
+        case "lightYellow": baseColor = Color(red: 1.0, green: 1.0, blue: 0.88)
+        case "lavender": baseColor = Color(red: 0.95, green: 0.95, blue: 1.0)
+        default: baseColor = .white
+        }
+        
+        return baseColor.opacity(opacity)
     }
 }
 

@@ -69,11 +69,20 @@
 "settings.appearance" = "外观";
 "settings.language" = "语言";
 "settings.language.select" = "选择语言";
+"settings.language.info" = "语言更改立即生效";
 "settings.theme" = "主题";
+"settings.theme.picker" = "外观";
 "settings.theme.system" = "系统";
 "settings.theme.light" = "浅色";
 "settings.theme.dark" = "深色";
+"settings.theme.info" = "选择您喜欢的主题";
+"settings.background" = "背景";
+"settings.background.colors" = "热门颜色";
+"settings.background.info" = "背景颜色更改立即应用";
 "settings.window" = "窗口";
+"settings.window.width" = "宽度";
+"settings.window.height" = "高度";
+"settings.window.info" = "窗口大小更改立即应用";
 "settings.startup" = "登录时启动";
 "settings.notifications" = "通知";
 "settings.sound" = "声音警报";
@@ -81,6 +90,7 @@
 "settings.about" = "关于";
 "settings.version" = "版本";
 "settings.close" = "关闭";
+"settings.auto.save.info" = "设置自动保存";
 
 /* General */
 "general.ok" = "确定";

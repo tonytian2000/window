@@ -69,11 +69,20 @@
 "settings.appearance" = "Appearance";
 "settings.language" = "Language";
 "settings.language.select" = "Select Language";
+"settings.language.info" = "Language changes take effect immediately";
 "settings.theme" = "Theme";
+"settings.theme.picker" = "Appearance";
 "settings.theme.system" = "System";
 "settings.theme.light" = "Light";
 "settings.theme.dark" = "Dark";
+"settings.theme.info" = "Choose your preferred theme";
+"settings.background" = "Background";
+"settings.background.colors" = "Popular Colors";
+"settings.background.info" = "Background color changes are applied instantly";
 "settings.window" = "Window";
+"settings.window.width" = "Width";
+"settings.window.height" = "Height";
+"settings.window.info" = "Window size changes are applied instantly";
 "settings.startup" = "Launch at Login";
 "settings.notifications" = "Notifications";
 "settings.sound" = "Sound Alerts";
@@ -81,6 +90,7 @@
 "settings.about" = "About";
 "settings.version" = "Version";
 "settings.close" = "Close";
+"settings.auto.save.info" = "Settings are automatically saved";
 
 /* General */
 "general.ok" = "OK";

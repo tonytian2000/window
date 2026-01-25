@@ -4,6 +4,7 @@ import AppKit
 struct NotesViewWithRichText: View {
     @ObservedObject var viewModel: NotesViewModel
     @ObservedObject var localization = LocalizationManager.shared
+    @ObservedObject var settings = AppSettings.shared
     @State private var newNoteAttributedText = NSAttributedString()
     @State private var selectedCategory = ""
     @State private var showingSettings = false
@@ -14,8 +15,14 @@ struct NotesViewWithRichText: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // 1. Top bar - Tab selector
+            // 1. Top bar - Tab selector with date
             HStack(spacing: 16) {
+                // Date display on the left
+                Text(formattedDate())
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundColor(.secondary)
+                    .padding(.leading, 4)
+                
                 Spacer()
                 
                 Button(action: { selectedNotesTab = 0 }) {
@@ -48,7 +55,7 @@ struct NotesViewWithRichText: View {
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
-            .background(Color.white.opacity(0.5))
+            .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
             
             Divider()
             
@@ -64,21 +71,7 @@ struct NotesViewWithRichText: View {
             // 4. Bottom bar - Configuration buttons
             Divider()
             HStack(spacing: 12) {
-                if !viewModel.notes.isEmpty {
-                    Button(action: exportNotes) {
-                        HStack(spacing: 4) {
-                            Image(systemName: "square.and.arrow.up")
-                                .font(.caption)
-                            Text("Export")
-                                .font(.caption)
-                        }
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .contentShape(Rectangle())
-                        .foregroundColor(.secondary)
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
+
                 
                 Spacer()
                 
@@ -86,7 +79,7 @@ struct NotesViewWithRichText: View {
                     HStack(spacing: 4) {
                         Image(systemName: "gearshape.fill")
                             .font(.caption)
-                        Text("Settings")
+                        Text(localization.localized("notes.settings"))
                             .font(.caption)
                     }
                     .padding(.horizontal, 8)
@@ -98,7 +91,7 @@ struct NotesViewWithRichText: View {
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .background(Color.white.opacity(0.5))
+            .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
         }
         .sheet(isPresented: $showingSettings) {
             NotesSettingsView()
@@ -125,7 +118,7 @@ struct NotesViewWithRichText: View {
                 })
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(6)
-                    .background(Color.white)
+                    .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor))
             }
             
             // Category and Save button (shown when there's content)
@@ -136,7 +129,7 @@ struct NotesViewWithRichText: View {
                         .font(.caption)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 6)
-                        .background(Color.white.opacity(0.9))
+                        .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.9))
                         .cornerRadius(6)
                         .frame(width: 120)
                     
@@ -158,7 +151,7 @@ struct NotesViewWithRichText: View {
                 .padding(.trailing, 8)
             }
         }
-        .background(Color.white)
+        .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor))
     }
     
     private var hasContent: Bool {
@@ -182,7 +175,7 @@ struct NotesViewWithRichText: View {
                 }
             }
             .padding(8)
-            .background(Color.white.opacity(0.5))
+            .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
             
             Divider()
             
@@ -235,6 +228,29 @@ struct NotesViewWithRichText: View {
             NSWorkspace.shared.activateFileViewerSelecting([url])
         }
     }
+    
+    private func formattedDate() -> String {
+        let now = Date()
+        let formatter = DateFormatter()
+        
+        // Set locale based on current language
+        switch localization.currentLanguage {
+        case "zh-Hans":
+            formatter.locale = Locale(identifier: "zh_CN")
+            formatter.dateFormat = "M月d日 EEEE"
+        case "ja":
+            formatter.locale = Locale(identifier: "ja_JP")
+            formatter.dateFormat = "M月d日（E）"
+        case "de":
+            formatter.locale = Locale(identifier: "de_DE")
+            formatter.dateFormat = "d. MMMM, EEEE"
+        default: // English
+            formatter.locale = Locale(identifier: "en_US")
+            formatter.dateFormat = "MMMM d, EEEE"
+        }
+        
+        return formatter.string(from: now)
+    }
 }
 
 // Wrapper to capture NSTextView reference
@@ -255,6 +271,10 @@ struct RichTextEditorView: NSViewRepresentable {
         tv.textStorage?.setAttributedString(attributedText)
         tv.delegate = context.coordinator
         
+        // Set background color
+        tv.backgroundColor = NSColor(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor))
+        tv.drawsBackground = true
+        
         // Hide scrollbar
         scrollView.hasVerticalScroller = false
         scrollView.hasHorizontalScroller = false
@@ -272,6 +292,9 @@ struct RichTextEditorView: NSViewRepresentable {
         if tv.attributedString() != attributedText {
             tv.textStorage?.setAttributedString(attributedText)
         }
+        
+        // Update background color when settings change
+        tv.backgroundColor = NSColor(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor))
     }
     
     func makeCoordinator() -> Coordinator {
@@ -355,6 +378,7 @@ struct RichTextEditorView: NSViewRepresentable {
 struct RichNoteRow: View {
     let note: Note
     @ObservedObject var viewModel: NotesViewModel
+    @ObservedObject var settings = AppSettings.shared
     @State private var isHovered = false
     @State private var isEditing = false
     @State private var editedAttributedContent = NSAttributedString()
@@ -371,7 +395,7 @@ struct RichNoteRow: View {
                     }
                 } else {
                     Text(AttributedString(note.attributedContent))
-                        .font(.system(size: 13))
+                        .font(.system(size: 16))
                         .foregroundColor(.primary)
                 }
                 
@@ -426,7 +450,7 @@ struct RichNoteRow: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 10)
-        .background(Color(NSColor.textBackgroundColor).opacity(0.5))
+        .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
         .onHover { hovering in
             isHovered = hovering
         }

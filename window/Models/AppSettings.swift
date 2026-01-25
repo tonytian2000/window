@@ -59,15 +59,32 @@ class AppSettings: ObservableObject {
     }
     
     @Published var windowWidth: Int {
-        didSet { UserDefaults.standard.set(windowWidth, forKey: "windowWidth") }
+        didSet {
+            UserDefaults.standard.set(windowWidth, forKey: "windowWidth")
+            NotificationCenter.default.post(name: NSNotification.Name("WindowSizeChanged"), object: nil)
+        }
     }
     
     @Published var windowHeight: Int {
-        didSet { UserDefaults.standard.set(windowHeight, forKey: "windowHeight") }
+        didSet {
+            UserDefaults.standard.set(windowHeight, forKey: "windowHeight")
+            NotificationCenter.default.post(name: NSNotification.Name("WindowSizeChanged"), object: nil)
+        }
     }
     
     @Published var baseFontSize: Int {
         didSet { UserDefaults.standard.set(baseFontSize, forKey: "baseFontSize") }
+    }
+    
+    @Published var backgroundColor: String {
+        didSet { UserDefaults.standard.set(backgroundColor, forKey: "backgroundColor") }
+    }
+    
+    @Published var theme: String {
+        didSet {
+            UserDefaults.standard.set(theme, forKey: "theme")
+            NotificationCenter.default.post(name: NSNotification.Name("ThemeChanged"), object: nil)
+        }
     }
     
     private init() {
@@ -92,5 +109,7 @@ class AppSettings: ObservableObject {
         self.windowWidth = UserDefaults.standard.integer(forKey: "windowWidth") == 0 ? 360 : UserDefaults.standard.integer(forKey: "windowWidth")
         self.windowHeight = UserDefaults.standard.integer(forKey: "windowHeight") == 0 ? 500 : UserDefaults.standard.integer(forKey: "windowHeight")
         self.baseFontSize = UserDefaults.standard.integer(forKey: "baseFontSize") == 0 ? 13 : UserDefaults.standard.integer(forKey: "baseFontSize")
+        self.backgroundColor = UserDefaults.standard.string(forKey: "backgroundColor") ?? "white"
+        self.theme = UserDefaults.standard.string(forKey: "theme") ?? "light"
     }
 }
