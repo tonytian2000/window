@@ -20,7 +20,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         if let button = statusItem?.button {
-            button.image = NSImage(systemSymbolName: "macwindow", accessibilityDescription: "Window")
+            // Load custom icon from bundle resources
+            if let customImage = NSImage(named: "win") {
+                // Resize to larger menu bar size for better visibility
+                customImage.size = NSSize(width: 32, height: 32)
+                button.image = customImage
+            } else {
+                // Fallback to system icon if custom image not found
+                button.image = NSImage(systemSymbolName: "macwindow", accessibilityDescription: "Window")
+            }
             button.action = #selector(togglePanel)
             button.target = self
         }

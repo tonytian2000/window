@@ -1,4 +1,5 @@
 import Foundation
+import AppKit
 
 class NotesViewModel: ObservableObject {
     @Published var notes: [Note] = []
@@ -10,7 +11,7 @@ class NotesViewModel: ObservableObject {
         if searchText.isEmpty {
             return notes
         }
-        return notes.filter { $0.content.localizedCaseInsensitiveContains(searchText) }
+        return notes.filter { $0.plainTextContent.localizedCaseInsensitiveContains(searchText) }
     }
     
     init() {
@@ -21,15 +22,23 @@ class NotesViewModel: ObservableObject {
         notes = storageService.loadNotes()
     }
     
-    func addNote(content: String, category: String? = nil) {
-        let note = Note(content: content, category: category)
+    func addNote(attributedContent: NSAttributedString, category: String? = nil) {
+        guard let rtfData = try? attributedContent.data(from: NSRange(location: 0, length: attributedContent.length),
+                                                        documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf]) else {
+            return
+        }
+        let note = Note(contentData: rtfData, category: category)
         notes.insert(note, at: 0)
         storageService.saveNotes(notes)
     }
     
-    func updateNote(_ note: Note, content: String, category: String? = nil) {
+    func updateNote(_ note: Note, attributedContent: NSAttributedString, category: String? = nil) {
+        guard let rtfData = try? attributedContent.data(from: NSRange(location: 0, length: attributedContent.length),
+                                                        documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf]) else {
+            return
+        }
         if let index = notes.firstIndex(where: { $0.id == note.id }) {
-            notes[index] = Note(id: note.id, content: content, timestamp: note.timestamp, category: category)
+            notes[index] = Note(id: note.id, contentData: rtfData, timestamp: note.timestamp, category: category)
             storageService.saveNotes(notes)
         }
     }
@@ -48,7 +57,7 @@ class NotesViewModel: ObservableObject {
             if let category = note.category {
                 exportText += "**Category:** \(category)\n\n"
             }
-            exportText += "\(note.content)\n\n"
+            exportText += "\(note.plainTextContent)\n\n"
             exportText += "---\n\n"
         }
         

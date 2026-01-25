@@ -22,16 +22,22 @@ struct NotesSettingsView: View {
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    // Default category
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Default Category")
+                    // Default font size
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Default Font Size")
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        TextField("Work", text: Binding(
-                            get: { settings.defaultNoteCategory },
-                            set: { settings.defaultNoteCategory = $0 }
-                        ))
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                        HStack {
+                            Text("\(settings.baseFontSize) pt")
+                                .font(.caption)
+                            Spacer()
+                        }
+                        
+                        Slider(value: Binding(
+                            get: { Double(settings.baseFontSize) },
+                            set: { settings.baseFontSize = Int($0) }
+                        ), in: 10...24, step: 1)
                     }
                     
                     Divider()
@@ -53,32 +59,6 @@ struct NotesSettingsView: View {
                             set: { settings.showNoteCategories = $0 }
                         ))
                             .font(.caption)
-                    }
-                    
-                    Divider()
-                    
-                    // Note management
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Note Management")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                        
-                        Toggle("Auto-focus text editor on open", isOn: Binding(
-                            get: { settings.autoFocusNoteEditor },
-                            set: { settings.autoFocusNoteEditor = $0 }
-                        ))
-                            .font(.caption)
-                        
-                        HStack {
-                            Text("Keep last \(settings.maxNotes) notes")
-                                .font(.caption)
-                            Spacer()
-                        }
-                        
-                        Slider(value: Binding(
-                            get: { Double(settings.maxNotes) },
-                            set: { settings.maxNotes = Int($0) }
-                        ), in: 10...500, step: 10)
                     }
                 }
                 .padding()

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedTab = 0
+    @State private var selectedTab = 1
     @State private var showingAlertSettings = false
     @State private var showingNotesSettings = false
     @StateObject private var alertsViewModel = AlertsViewModel()
@@ -12,10 +12,29 @@ struct ContentView: View {
         HStack(spacing: 0) {
             // Left sidebar with tabs
             VStack(spacing: 0) {
-                TabButton(title: localization.localized("tab.alerts"), icon: "bell.fill", tag: 0, selectedTab: $selectedTab, badgeCount: alertsViewModel.unreadCount)
+                // Temporarily hiding Alerts tab
+                // TabButton(title: localization.localized("tab.alerts"), icon: "bell.fill", tag: 0, selectedTab: $selectedTab, badgeCount: alertsViewModel.unreadCount)
                 TabButton(title: localization.localized("tab.notes"), icon: "note.text", tag: 1, selectedTab: $selectedTab)
                 TabButton(title: localization.localized("settings.title"), icon: "gearshape.fill", tag: 2, selectedTab: $selectedTab)
+                
                 Spacer()
+                
+                Divider()
+                    .padding(.horizontal, 8)
+                
+                // App icon at bottom
+                if let nsImage = NSImage(named: "win") {
+                    Image(nsImage: nsImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
+                        .padding(.vertical, 12)
+                } else {
+                    Image(systemName: "square.fill")
+                        .font(.system(size: 24))
+                        .foregroundColor(.accentColor)
+                        .padding(.vertical, 12)
+                }
             }
             .frame(width: 50)
             .background(Color.white.opacity(0.95))
@@ -23,16 +42,13 @@ struct ContentView: View {
             Divider()
             
             // Main content area
-            Group {
-                switch selectedTab {
-                case 0:
-                    AlertsView(viewModel: alertsViewModel)
-                case 1:
-                    NotesView(viewModel: notesViewModel)
-                case 2:
+            ZStack {
+                NotesViewWithRichText(viewModel: notesViewModel)
+                    .opacity(selectedTab == 1 ? 1 : 0)
+                    .allowsHitTesting(selectedTab == 1)
+                
+                if selectedTab == 2 {
                     SettingsView()
-                default:
-                    AlertsView(viewModel: alertsViewModel)
                 }
             }
         }
@@ -74,7 +90,7 @@ struct TabButton: View {
             ZStack(alignment: .topTrailing) {
                 Image(systemName: icon)
                     .font(.system(size: 16))
-                    .help(title)
+                    .frame(maxWidth: .infinity)
                 
                 if badgeCount > 0 {
                     Text("\(badgeCount)")
@@ -87,12 +103,14 @@ struct TabButton: View {
                         .offset(x: 6, y: -6)
                 }
             }
+            .foregroundColor(selectedTab == tag ? .accentColor : .secondary)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 10)
-            .background(selectedTab == tag ? Color.accentColor.opacity(0.15) : Color.clear)
-            .foregroundColor(selectedTab == tag ? .accentColor : .secondary)
+            .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
+        .background(selectedTab == tag ? Color.accentColor.opacity(0.15) : Color.clear)
+        .help(title)
         .onHover { hovering in
             isHovered = hovering
         }

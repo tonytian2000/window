@@ -66,32 +66,6 @@ struct SettingsView: View {
                     .padding(.vertical, 4)
                 }
                 
-                // Font Size Settings
-                GroupBox(label: Label("Font Size", systemImage: "textformat.size")) {
-                    VStack(alignment: .leading, spacing: 12) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                Text("Base Font Size")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                Spacer()
-                                Text("\(settings.baseFontSize) pt")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            Slider(value: Binding(
-                                get: { Double(settings.baseFontSize) },
-                                set: { settings.baseFontSize = Int($0) }
-                            ), in: 10...18, step: 1)
-                        }
-                        
-                        Text("Adjusts text size throughout the app")
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(.vertical, 4)
-                }
-                
                 // Info message
                 HStack {
                     Image(systemName: "info.circle")
@@ -100,18 +74,6 @@ struct SettingsView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-                .padding(.top, 8)
-                
-                // Version info
-                VStack(spacing: 4) {
-                    Text(localization.localized("app.title") + " v1.0.0")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                    Text("Menu bar app for production monitoring and notes")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                }
-                .frame(maxWidth: .infinity)
                 .padding(.top, 8)
             }
             .padding()
