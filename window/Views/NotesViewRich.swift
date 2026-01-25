@@ -267,7 +267,10 @@ struct RichTextEditorView: NSViewRepresentable {
         // Configure text view for rich text
         tv.isRichText = true
         tv.allowsUndo = true
-        tv.font = NSFont.systemFont(ofSize: CGFloat(settings.baseFontSize))
+        
+        // Set default font based on settings
+        updateDefaultFont(for: tv)
+        
         tv.textStorage?.setAttributedString(attributedText)
         tv.delegate = context.coordinator
         
@@ -293,8 +296,24 @@ struct RichTextEditorView: NSViewRepresentable {
             tv.textStorage?.setAttributedString(attributedText)
         }
         
+        // Update default font when settings change
+        updateDefaultFont(for: tv)
+        
         // Update background color when settings change
         tv.backgroundColor = NSColor(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor))
+    }
+    
+    private func updateDefaultFont(for textView: NSTextView) {
+        let fontSize = CGFloat(settings.baseFontSize)
+        let defaultFont: NSFont
+        if settings.defaultNoteFont == "System Font" {
+            defaultFont = NSFont.systemFont(ofSize: fontSize)
+        } else if let customFont = NSFont(name: settings.defaultNoteFont, size: fontSize) {
+            defaultFont = customFont
+        } else {
+            defaultFont = NSFont.systemFont(ofSize: fontSize)
+        }
+        textView.font = defaultFont
     }
     
     func makeCoordinator() -> Coordinator {

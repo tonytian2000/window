@@ -56,6 +56,12 @@
 
 /* Notes Settings */
 "notes.settings.title" = "Notizeneinstellungen";
+"notes.settings.default.font.size" = "Standard-Schriftgröße";
+"notes.settings.default.font" = "Standardschriftart";
+"notes.settings.default.font.info" = "Neue Notizen verwenden standardmäßig diese Schriftart";
+"notes.settings.display.options" = "Anzeigeoptionen";
+"notes.settings.show.timestamps" = "Zeitstempel anzeigen";
+"notes.settings.show.categories" = "Kategorien anzeigen";
 "notes.settings.default.category" = "Standardkategorie";
 "notes.settings.default.category.placeholder" = "Arbeit";
 "notes.settings.auto.timestamp" = "Zeitstempel automatisch hinzufügen";

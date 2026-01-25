@@ -2,13 +2,14 @@ import SwiftUI
 
 struct NotesSettingsView: View {
     @ObservedObject var settings = AppSettings.shared
+    @ObservedObject var localization = LocalizationManager.shared
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             // Header
             HStack {
-                Text("Notes Settings")
+                Text(localization.localized("notes.settings.title"))
                     .font(.headline)
                 Spacer()
                 Button(action: { dismiss() }) {
@@ -24,7 +25,7 @@ struct NotesSettingsView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     // Default font size
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Default Font Size")
+                        Text(localization.localized("notes.settings.default.font.size"))
                             .font(.caption)
                             .foregroundColor(.secondary)
                         
@@ -42,19 +43,41 @@ struct NotesSettingsView: View {
                     
                     Divider()
                     
-                    // Display options
+                    // Default font family
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Display Options")
+                        Text(localization.localized("notes.settings.default.font"))
                             .font(.caption)
                             .foregroundColor(.secondary)
                         
-                        Toggle("Show timestamps", isOn: Binding(
+                        Picker("", selection: $settings.defaultNoteFont) {
+                            ForEach(availableFonts, id: \.self) { fontName in
+                                Text(fontName)
+                                    .font(.custom(fontName == "System Font" ? "" : fontName, size: 13))
+                                    .tag(fontName)
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        
+                        Text(localization.localized("notes.settings.default.font.info"))
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Divider()
+                    
+                    // Display options
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(localization.localized("notes.settings.display.options"))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        Toggle(localization.localized("notes.settings.show.timestamps"), isOn: Binding(
                             get: { settings.showNoteTimestamps },
                             set: { settings.showNoteTimestamps = $0 }
                         ))
                             .font(.caption)
                         
-                        Toggle("Show categories", isOn: Binding(
+                        Toggle(localization.localized("notes.settings.show.categories"), isOn: Binding(
                             get: { settings.showNoteCategories },
                             set: { settings.showNoteCategories = $0 }
                         ))
@@ -65,6 +88,21 @@ struct NotesSettingsView: View {
             }
         }
         .padding()
-        .frame(width: 300, height: 350)
+        .frame(width: 300, height: 400)
+    }
+    
+    private var availableFonts: [String] {
+        [
+            "System Font",
+            "Arial",
+            "Helvetica",
+            "Times New Roman",
+            "Courier New",
+            "Georgia",
+            "Verdana",
+            "Monaco",
+            "Menlo",
+            "SF Mono"
+        ]
     }
 }

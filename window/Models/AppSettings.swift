@@ -37,6 +37,10 @@ class AppSettings: ObservableObject {
         didSet { UserDefaults.standard.set(defaultNoteCategory, forKey: "defaultNoteCategory") }
     }
     
+    @Published var defaultNoteFont: String {
+        didSet { UserDefaults.standard.set(defaultNoteFont, forKey: "defaultNoteFont") }
+    }
+    
     @Published var showNoteTimestamps: Bool {
         didSet { UserDefaults.standard.set(showNoteTimestamps, forKey: "showNoteTimestamps") }
     }
@@ -99,6 +103,7 @@ class AppSettings: ObservableObject {
         
         // Notes settings
         self.defaultNoteCategory = UserDefaults.standard.string(forKey: "defaultNoteCategory") ?? ""
+        self.defaultNoteFont = UserDefaults.standard.string(forKey: "defaultNoteFont") ?? "System Font"
         self.showNoteTimestamps = UserDefaults.standard.object(forKey: "showNoteTimestamps") == nil ? true : UserDefaults.standard.bool(forKey: "showNoteTimestamps")
         self.showNoteCategories = UserDefaults.standard.object(forKey: "showNoteCategories") == nil ? true : UserDefaults.standard.bool(forKey: "showNoteCategories")
         self.autoFocusNoteEditor = UserDefaults.standard.object(forKey: "autoFocusNoteEditor") == nil ? true : UserDefaults.standard.bool(forKey: "autoFocusNoteEditor")

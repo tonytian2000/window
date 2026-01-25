@@ -56,6 +56,12 @@
 
 /* Notes Settings */
 "notes.settings.title" = "笔记设置";
+"notes.settings.default.font.size" = "默认字体大小";
+"notes.settings.default.font" = "默认字体";
+"notes.settings.default.font.info" = "新笔记默认使用此字体";
+"notes.settings.display.options" = "显示选项";
+"notes.settings.show.timestamps" = "显示时间戳";
+"notes.settings.show.categories" = "显示分类";
 "notes.settings.default.category" = "默认分类";
 "notes.settings.default.category.placeholder" = "工作";
 "notes.settings.auto.timestamp" = "自动添加时间戳";

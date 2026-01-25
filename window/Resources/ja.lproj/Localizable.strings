@@ -56,6 +56,12 @@
 
 /* Notes Settings */
 "notes.settings.title" = "ノート設定";
+"notes.settings.default.font.size" = "デフォルトフォントサイズ";
+"notes.settings.default.font" = "デフォルトフォント";
+"notes.settings.default.font.info" = "新しいノートはデフォルトでこのフォントを使用します";
+"notes.settings.display.options" = "表示オプション";
+"notes.settings.show.timestamps" = "タイムスタンプを表示";
+"notes.settings.show.categories" = "カテゴリを表示";
 "notes.settings.default.category" = "デフォルトカテゴリ";
 "notes.settings.default.category.placeholder" = "仕事";
 "notes.settings.auto.timestamp" = "タイムスタンプを自動追加";

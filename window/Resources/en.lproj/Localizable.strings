@@ -56,6 +56,12 @@
 
 /* Notes Settings */
 "notes.settings.title" = "Notes Settings";
+"notes.settings.default.font.size" = "Default Font Size";
+"notes.settings.default.font" = "Default Font";
+"notes.settings.default.font.info" = "New notes will use this font by default";
+"notes.settings.display.options" = "Display Options";
+"notes.settings.show.timestamps" = "Show timestamps";
+"notes.settings.show.categories" = "Show categories";
 "notes.settings.default.category" = "Default Category";
 "notes.settings.default.category.placeholder" = "Work";
 "notes.settings.auto.timestamp" = "Auto-add Timestamp";

@@ -141,6 +141,14 @@ struct RichTextToolbar: View {
             Divider()
                 .frame(height: 16)
             
+            // Font Family
+            Group {
+                FontPickerButton(textView: textView, localization: localization)
+            }
+            
+            Divider()
+                .frame(height: 16)
+            
             // Font Size
             Group {
                 ToolbarButton(icon: "textformat.size.smaller", action: { decreaseFontSize() })
@@ -169,28 +177,158 @@ struct RichTextToolbar: View {
         let selectedRange = textView.selectedRange()
         guard selectedRange.length > 0 else { return }
         
-        // Check if any character in selection is bold to determine toggle direction
+        // Check if selection has bold using stroke width attribute as well
         var hasBold = false
-        textStorage.enumerateAttribute(.font, in: selectedRange, options: []) { value, range, stop in
-            if let font = value as? NSFont, font.fontDescriptor.symbolicTraits.contains(.bold) {
+        textStorage.enumerateAttributes(in: selectedRange, options: []) { attributes, range, stop in
+            if let font = attributes[.font] as? NSFont {
+                let traits = font.fontDescriptor.symbolicTraits
+                if traits.contains(.bold) {
+                    hasBold = true
+                    stop.pointee = true
+                }
+            }
+            // Also check for simulated bold via stroke width
+            if let strokeWidth = attributes[.strokeWidth] as? NSNumber, strokeWidth.floatValue < 0 {
                 hasBold = true
                 stop.pointee = true
             }
         }
         
-        // Apply formatting to each character with its current font
+        // Apply formatting
+        textStorage.beginEditing()
         textStorage.enumerateAttribute(.font, in: selectedRange, options: []) { value, range, stop in
             let currentFont = (value as? NSFont) ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
-            let newFont: NSFont
             
             if hasBold {
-                newFont = NSFontManager.shared.convert(currentFont, toNotHaveTrait: .boldFontMask)
+                // Remove bold
+                if let regularFont = findRegularFont(for: currentFont) {
+                    textStorage.addAttribute(.font, value: regularFont, range: range)
+                }
+                // Remove stroke width if it was used for simulated bold
+                textStorage.removeAttribute(.strokeWidth, range: range)
             } else {
-                newFont = NSFontManager.shared.convert(currentFont, toHaveTrait: .boldFontMask)
+                // Add bold
+                if let boldFont = findBoldFont(for: currentFont) {
+                    textStorage.addAttribute(.font, value: boldFont, range: range)
+                } else {
+                    // Fallback: Use stroke width to simulate bold if no bold font variant exists
+                    textStorage.addAttribute(.strokeWidth, value: -3.0, range: range)
+                }
             }
-            
-            textStorage.addAttribute(.font, value: newFont, range: range)
         }
+        textStorage.endEditing()
+    }
+    
+    private func findBoldFont(for font: NSFont) -> NSFont? {
+        let size = font.pointSize
+        let fontName = font.fontName
+        
+        // Method 1: Try font descriptor with bold trait
+        var descriptor = font.fontDescriptor
+        var traits = descriptor.symbolicTraits
+        traits.insert(.bold)
+        if let newDescriptor = NSFontDescriptor(fontAttributes: [
+            .family: font.familyName ?? "",
+            .traits: [NSFontDescriptor.TraitKey.weight: NSFont.Weight.bold],
+            .size: size
+        ]) as NSFontDescriptor?, let boldFont = NSFont(descriptor: newDescriptor, size: size) {
+            return boldFont
+        }
+        
+        // Method 2: Try common bold naming patterns
+        let boldPatterns = [
+            fontName.replacingOccurrences(of: "Regular", with: "Bold"),
+            fontName.replacingOccurrences(of: "-Regular", with: "-Bold"),
+            fontName + "-Bold",
+            fontName.replacingOccurrences(of: "Roman", with: "Bold"),
+            fontName + "Bold",
+            fontName.replacingOccurrences(of: "MT", with: "-BoldMT"),
+            fontName.replacingOccurrences(of: "PS", with: "PS-Bold"),
+            fontName + "PS-Bold"
+        ]
+        
+        for pattern in boldPatterns {
+            if let found = NSFont(name: pattern, size: size) {
+                return found
+            }
+        }
+        
+        // Method 3: Try NSFontManager
+        let boldFont = NSFontManager.shared.convert(font, toHaveTrait: .boldFontMask)
+        if boldFont.fontDescriptor.symbolicTraits.contains(.bold) && boldFont.fontName != fontName {
+            return boldFont
+        }
+        
+        // Method 4: Search font family for bold member
+        if let family = font.familyName {
+            let members = NSFontManager.shared.availableMembers(ofFontFamily: family) ?? []
+            for member in members {
+                if let memberName = member[0] as? String,
+                   let weight = member[2] as? Int,
+                   weight >= 7 { // 7+ typically indicates bold
+                    if let found = NSFont(name: memberName, size: size) {
+                        return found
+                    }
+                }
+            }
+        }
+        
+        return nil
+    }
+    
+    private func findRegularFont(for font: NSFont) -> NSFont? {
+        let size = font.pointSize
+        let fontName = font.fontName
+        
+        // Method 1: Try font descriptor with regular weight
+        if let newDescriptor = NSFontDescriptor(fontAttributes: [
+            .family: font.familyName ?? "",
+            .traits: [NSFontDescriptor.TraitKey.weight: NSFont.Weight.regular],
+            .size: size
+        ]) as NSFontDescriptor?, let regularFont = NSFont(descriptor: newDescriptor, size: size) {
+            if !regularFont.fontDescriptor.symbolicTraits.contains(.bold) {
+                return regularFont
+            }
+        }
+        
+        // Method 2: Try common regular naming patterns
+        let regularPatterns = [
+            fontName.replacingOccurrences(of: "Bold", with: "Regular"),
+            fontName.replacingOccurrences(of: "-Bold", with: "-Regular"),
+            fontName.replacingOccurrences(of: "-Bold", with: ""),
+            fontName.replacingOccurrences(of: "Bold", with: ""),
+            fontName.replacingOccurrences(of: "-BoldMT", with: "MT"),
+            fontName.replacingOccurrences(of: "PS-Bold", with: "PS"),
+            fontName.replacingOccurrences(of: "Bold", with: "Roman")
+        ]
+        
+        for pattern in regularPatterns {
+            if let found = NSFont(name: pattern, size: size) {
+                return found
+            }
+        }
+        
+        // Method 3: Try NSFontManager
+        let regularFont = NSFontManager.shared.convert(font, toNotHaveTrait: .boldFontMask)
+        if !regularFont.fontDescriptor.symbolicTraits.contains(.bold) && regularFont.fontName != fontName {
+            return regularFont
+        }
+        
+        // Method 4: Search font family for regular member
+        if let family = font.familyName {
+            let members = NSFontManager.shared.availableMembers(ofFontFamily: family) ?? []
+            for member in members {
+                if let memberName = member[0] as? String,
+                   let weight = member[2] as? Int,
+                   weight <= 5 { // 5 or less typically indicates regular
+                    if let found = NSFont(name: memberName, size: size) {
+                        return found
+                    }
+                }
+            }
+        }
+        
+        return nil
     }
     
     private func toggleItalic() {
@@ -438,6 +576,90 @@ struct ToolbarButton: View {
         .buttonStyle(PlainButtonStyle())
         .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
         .cornerRadius(4)
+    }
+}
+
+struct FontPickerButton: View {
+    let textView: NSTextView?
+    @ObservedObject var localization: LocalizationManager
+    @ObservedObject var settings = AppSettings.shared
+    
+    var body: some View {
+        Menu {
+            ForEach(popularFonts, id: \.self) { fontName in
+                Button(action: {
+                    applyFont(fontName)
+                }) {
+                    Text(fontName)
+                        .font(.custom(fontName, size: 14))
+                }
+            }
+        } label: {
+            HStack(spacing: 4) {
+                Image(systemName: "textformat")
+                    .font(.system(size: 14))
+                    .foregroundColor(.secondary)
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 10))
+                    .foregroundColor(.secondary)
+            }
+            .frame(width: 40, height: 24)
+        }
+        .buttonStyle(PlainButtonStyle())
+        .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
+        .cornerRadius(4)
+    }
+    
+    private var popularFonts: [String] {
+        [
+            "System Font",
+            "Arial",
+            "Helvetica",
+            "Times New Roman",
+            "Courier New",
+            "Georgia",
+            "Verdana",
+            "Monaco",
+            "Menlo",
+            "SF Mono",
+            "Comic Sans MS",
+            "Impact"
+        ]
+    }
+    
+    private func applyFont(_ fontName: String) {
+        guard let textView = textView, let textStorage = textView.textStorage else { return }
+        textView.window?.makeFirstResponder(textView)
+        
+        let selectedRange = textView.selectedRange()
+        guard selectedRange.length > 0 else { return }
+        
+        // Apply font to each character with its current size and traits
+        textStorage.enumerateAttribute(.font, in: selectedRange, options: []) { value, range, stop in
+            let currentFont = (value as? NSFont) ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
+            let currentSize = currentFont.pointSize
+            let currentTraits = currentFont.fontDescriptor.symbolicTraits
+            
+            let newFont: NSFont
+            if fontName == "System Font" {
+                newFont = NSFont.systemFont(ofSize: currentSize)
+            } else if let font = NSFont(name: fontName, size: currentSize) {
+                newFont = font
+            } else {
+                newFont = currentFont
+            }
+            
+            // Preserve bold/italic traits
+            var finalFont = newFont
+            if currentTraits.contains(.bold) {
+                finalFont = NSFontManager.shared.convert(finalFont, toHaveTrait: .boldFontMask)
+            }
+            if currentTraits.contains(.italic) {
+                finalFont = NSFontManager.shared.convert(finalFont, toHaveTrait: .italicFontMask)
+            }
+            
+            textStorage.addAttribute(.font, value: finalFont, range: range)
+        }
     }
 }
 
