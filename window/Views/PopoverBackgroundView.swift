@@ -7,7 +7,7 @@ struct PopoverBackgroundView: View {
         GeometryReader { geometry in
             ZStack {
                 // Main background with rounded corners
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: 2)
                     .fill(Color(NSColor.windowBackgroundColor))
                     .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 5)
                 

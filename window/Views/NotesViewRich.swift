@@ -19,8 +19,8 @@ struct NotesViewWithRichText: View {
             HStack(spacing: 16) {
                 // Date display on the left
                 Text(formattedDate())
-                    .font(.system(size: 13, weight: .medium))
-                    .foregroundColor(.secondary)
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(settings.theme == "dark" ? .secondary : Color(white: 0.3))
                     .padding(.leading, 4)
                 
                 Spacer()
@@ -35,7 +35,7 @@ struct NotesViewWithRichText: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .contentShape(Rectangle())
-                    .foregroundColor(selectedNotesTab == 0 ? .accentColor : .secondary)
+                    .foregroundColor(selectedNotesTab == 0 ? .accentColor : (settings.theme == "dark" ? .secondary : Color(white: 0.3)))
                 }
                 .buttonStyle(PlainButtonStyle())
                 
@@ -49,7 +49,7 @@ struct NotesViewWithRichText: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .contentShape(Rectangle())
-                    .foregroundColor(selectedNotesTab == 1 ? .accentColor : .secondary)
+                    .foregroundColor(selectedNotesTab == 1 ? .accentColor : (settings.theme == "dark" ? .secondary : Color(white: 0.3)))
                 }
                 .buttonStyle(PlainButtonStyle())
             }
@@ -85,7 +85,7 @@ struct NotesViewWithRichText: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .contentShape(Rectangle())
-                    .foregroundColor(.secondary)
+                    .foregroundColor(settings.theme == "dark" ? .secondary : Color(white: 0.3))
                 }
                 .buttonStyle(PlainButtonStyle())
             }
@@ -415,7 +415,7 @@ struct RichNoteRow: View {
                 } else {
                     Text(AttributedString(note.attributedContent))
                         .font(.system(size: 16))
-                        .foregroundColor(.primary)
+                        .foregroundColor(settings.theme == "dark" ? .primary : Color(white: 0.1))
                 }
                 
                 HStack {
@@ -431,7 +431,7 @@ struct RichNoteRow: View {
                     
                     Text(note.timestamp.formatted(date: .abbreviated, time: .shortened))
                         .font(.caption2)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(settings.theme == "dark" ? .secondary : Color(white: 0.4))
                 }
             }
             

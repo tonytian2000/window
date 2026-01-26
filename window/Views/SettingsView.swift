@@ -112,7 +112,7 @@ struct SettingsView: View {
                             Slider(value: Binding(
                                 get: { Double(settings.windowHeight) },
                                 set: { settings.windowHeight = Int($0) }
-                            ), in: 400...800, step: 20)
+                            ), in: 400...600, step: 20)
                         }
                         
                         Text(localization.localized("settings.window.info"))

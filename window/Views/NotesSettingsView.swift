@@ -89,6 +89,8 @@ struct NotesSettingsView: View {
         }
         .padding()
         .frame(width: 300, height: 400)
+        .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
     
     private var availableFonts: [String] {

@@ -121,7 +121,7 @@ struct RichTextToolbar: View {
     @ObservedObject var settings = AppSettings.shared
     
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 4) {
             // Text Style
             Group {
                 ToolbarButton(icon: "bold", action: { toggleBold() })
@@ -131,7 +131,7 @@ struct RichTextToolbar: View {
             }
             
             Divider()
-                .frame(height: 16)
+                .frame(height: 14)
             
             // Lists
             Group {
@@ -140,7 +140,7 @@ struct RichTextToolbar: View {
             }
             
             Divider()
-                .frame(height: 16)
+                .frame(height: 14)
             
             // Font Family
             Group {
@@ -148,7 +148,7 @@ struct RichTextToolbar: View {
             }
             
             Divider()
-                .frame(height: 16)
+                .frame(height: 14)
             
             // Font Size
             Group {
@@ -157,17 +157,25 @@ struct RichTextToolbar: View {
             }
             
             Divider()
-                .frame(height: 16)
+                .frame(height: 14)
             
             // Colors
             Group {
                 ColorPickerButton(textView: textView, localization: localization)
             }
             
+            Divider()
+                .frame(height: 14)
+            
+            // Emoji
+            Group {
+                EmojiPickerButton(textView: textView)
+            }
+            
             Spacer()
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 6)
+        .padding(.horizontal, 6)
+        .padding(.vertical, 4)
         .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
     }
     
@@ -581,6 +589,7 @@ struct RichTextToolbar: View {
             }
         }
     }
+    
 }
 
 struct ToolbarButton: View {
@@ -591,13 +600,14 @@ struct ToolbarButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: icon)
-                .font(.system(size: 14))
+                .font(.system(size: 12))
                 .foregroundColor(.secondary)
-                .frame(width: 24, height: 24)
+                .frame(width: 20, height: 20)
+                .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
         .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
-        .cornerRadius(4)
+        .cornerRadius(3)
     }
 }
 
@@ -617,19 +627,20 @@ struct FontPickerButton: View {
                 }
             }
         } label: {
-            HStack(spacing: 4) {
+            HStack(spacing: 2) {
                 Image(systemName: "textformat")
-                    .font(.system(size: 14))
+                    .font(.system(size: 12))
                     .foregroundColor(.secondary)
                 Image(systemName: "chevron.down")
-                    .font(.system(size: 10))
+                    .font(.system(size: 8))
                     .foregroundColor(.secondary)
             }
-            .frame(width: 40, height: 24)
+            .frame(width: 32, height: 20)
+            .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
         .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
-        .cornerRadius(4)
+        .cornerRadius(3)
     }
     
     private var popularFonts: [String] {
@@ -690,36 +701,61 @@ struct ColorPickerButton: View {
     @ObservedObject var localization: LocalizationManager
     @ObservedObject var settings = AppSettings.shared
     @State private var showingColorPicker = false
-    @State private var selectedColor: Color = .black
     
     var body: some View {
-        Menu {
-            ForEach(predefinedColors, id: \.0) { name, color in
-                Button(action: {
-                    applyColor(color)
-                }) {
-                    HStack {
-                        Circle()
-                            .fill(color)
-                            .frame(width: 12, height: 12)
-                        Text(name)
-                    }
-                }
-            }
-        } label: {
-            HStack(spacing: 4) {
-                Image(systemName: "paintbrush.fill")
-                    .font(.system(size: 14))
-                    .foregroundColor(.secondary)
-                Image(systemName: "chevron.down")
-                    .font(.system(size: 10))
+        Button(action: { showingColorPicker.toggle() }) {
+            HStack(spacing: 2) {
+                Image(systemName: "a.square.fill")
+                    .font(.system(size: 12))
                     .foregroundColor(.secondary)
             }
-            .frame(width: 40, height: 24)
+            .frame(width: 20, height: 20)
+            .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
         .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
-        .cornerRadius(4)
+        .cornerRadius(3)
+        .popover(isPresented: $showingColorPicker, arrowEdge: .bottom) {
+            ColorPickerPopover(textView: textView, isPresented: $showingColorPicker, settings: settings)
+        }
+    }
+}
+
+struct ColorPickerPopover: View {
+    let textView: NSTextView?
+    @Binding var isPresented: Bool
+    @ObservedObject var settings: AppSettings
+    
+    private let columns = Array(repeating: GridItem(.flexible(minimum: 40, maximum: 40), spacing: 8), count: 4)
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Text Color")
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundColor(.secondary)
+            
+            LazyVGrid(columns: columns, spacing: 8) {
+                ForEach(predefinedColors, id: \.0) { name, color in
+                    Button(action: {
+                        applyColor(color)
+                    }) {
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(color)
+                            .frame(width: 40, height: 28)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                            )
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+        }
+        .padding(12)
+        .frame(width: 200)
+        .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor))
+        .clipShape(RoundedRectangle(cornerRadius: 6))
     }
     
     private var predefinedColors: [(String, Color)] {
@@ -730,6 +766,7 @@ struct ColorPickerButton: View {
             ("Green", .green),
             ("Orange", .orange),
             ("Purple", .purple),
+            ("Yellow", .yellow),
             ("Gray", .gray)
         ]
     }
@@ -743,5 +780,94 @@ struct ColorPickerButton: View {
         
         let nsColor = NSColor(color)
         textView.textStorage?.addAttribute(.foregroundColor, value: nsColor, range: selectedRange)
+        
+        isPresented = false
+    }
+}
+
+struct EmojiPickerButton: View {
+    let textView: NSTextView?
+    @ObservedObject var settings = AppSettings.shared
+    @State private var showingPicker = false
+    
+    var body: some View {
+        Button(action: { showingPicker.toggle() }) {
+            Image(systemName: "face.smiling")
+                .font(.system(size: 12))
+                .foregroundColor(.secondary)
+                .frame(width: 20, height: 20)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(PlainButtonStyle())
+        .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.5))
+        .cornerRadius(3)
+        .popover(isPresented: $showingPicker, arrowEdge: .bottom) {
+            EmojiPickerPopover(textView: textView, isPresented: $showingPicker)
+        }
+    }
+}
+
+struct EmojiPickerPopover: View {
+    let textView: NSTextView?
+    @Binding var isPresented: Bool
+    @ObservedObject var settings = AppSettings.shared
+    
+    private let columns = Array(repeating: GridItem(.flexible(minimum: 20, maximum: 20), spacing: 4), count: 10)
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                ForEach(emojiCategories, id: \.0) { category in
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(category.0)
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                        
+                        LazyVGrid(columns: columns, spacing: 4) {
+                            ForEach(category.1, id: \.self) { emoji in
+                                Button(action: {
+                                    insertEmoji(emoji)
+                                }) {
+                                    Text(emoji)
+                                        .font(.system(size: 18))
+                                        .frame(width: 24, height: 24)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                        }
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, 30)
+            .padding(.trailing, 12)
+            .padding(.vertical, 12)
+        }
+        .frame(width: 280, height: 320)
+        .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor))
+        .clipShape(RoundedRectangle(cornerRadius: 3))
+    }
+    
+    private var emojiCategories: [(String, [String])] {
+        [
+            ("Smileys", ["😀", "😃", "😄", "😁", "😅", "😂", "🤣", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋"]),
+            ("Gestures", ["👍", "👎", "👌", "✌️", "🤞", "🤟", "🤘", "🤙", "👈", "👉", "👆", "👇", "☝️", "✋", "🤚", "🖐", "🖖", "👋", "🤝", "🙏"]),
+            ("Hearts", ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍", "🤎", "💔", "❤️‍🔥", "❤️‍🩹", "💕", "💞", "💓", "💗", "💖", "💘", "💝", "💟"]),
+            ("Animals", ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐵", "🐔", "🐧", "🐦", "🐤", "🦆"]),
+            ("Food", ["🍎", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🍒", "🍑", "🥝", "🍅", "🥑", "🍆", "🥔", "🥕", "🌽", "🥒", "🥬", "🍞", "🥐"]),
+            ("Objects", ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🏓", "🏸", "🏒", "🏑", "🥍", "🏏", "🥅", "⛳️", "🏹", "🎣"]),
+            ("Symbols", ["⭐️", "✨", "💫", "🔥", "💥", "💢", "💦", "💨", "🌟", "✅", "❌", "⚠️", "🚫", "📌", "📍", "🔔", "🔕", "💡", "🔦", "🔮"])
+        ]
+    }
+    
+    private func insertEmoji(_ emoji: String) {
+        guard let textView = textView else { return }
+        textView.window?.makeFirstResponder(textView)
+        
+        let selectedRange = textView.selectedRange()
+        textView.insertText(emoji, replacementRange: selectedRange)
+        
+        // Keep popover open for multiple selections
     }
 }

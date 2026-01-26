@@ -54,12 +54,13 @@ struct ContentView: View {
         }
         .frame(width: CGFloat(settings.windowWidth), height: CGFloat(settings.windowHeight))
         .background(backgroundColorFromString(settings.backgroundColor))
-        .cornerRadius(10)
         .preferredColorScheme(settings.theme == "dark" ? .dark : .light)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.black.opacity(0.1), lineWidth: 0.5)
+                .stroke(Color.black, lineWidth: 2)
         )
+        
         .sheet(isPresented: $showingAlertSettings) {
             AlertSettingsView()
         }
@@ -83,8 +84,8 @@ struct ContentView: View {
         
         // Light theme uses selected background color
         switch colorName {
-        case "white": return .white
-        case "lightGray": return Color(white: 0.95)
+        case "white": return Color(red: 1.0, green: 1.0, blue: 1.0)
+        case "lightGray": return Color(white: 0.98)
         case "beige": return Color(red: 0.96, green: 0.96, blue: 0.86)
         case "lightBlue": return Color(red: 0.93, green: 0.95, blue: 1.0)
         case "lightGreen": return Color(red: 0.93, green: 1.0, blue: 0.93)
@@ -103,8 +104,8 @@ struct ContentView: View {
         
         let baseColor: Color
         switch backgroundColor {
-        case "white": baseColor = .white
-        case "lightGray": baseColor = Color(white: 0.95)
+        case "white": baseColor = Color(red: 1.0, green: 1.0, blue: 1.0)
+        case "lightGray": baseColor = Color(white: 0.98)
         case "beige": baseColor = Color(red: 0.96, green: 0.96, blue: 0.86)
         case "lightBlue": baseColor = Color(red: 0.93, green: 0.95, blue: 1.0)
         case "lightGreen": baseColor = Color(red: 0.93, green: 1.0, blue: 0.93)
