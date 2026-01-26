@@ -127,6 +127,7 @@ struct RichTextToolbar: View {
                 ToolbarButton(icon: "bold", action: { toggleBold() })
                 //ToolbarButton(icon: "italic", action: { toggleItalic() })
                 ToolbarButton(icon: "underline", action: { toggleUnderline() })
+                ToolbarButton(icon: "strikethrough", action: { toggleStrikethrough() })
             }
             
             Divider()
@@ -381,6 +382,27 @@ struct RichTextToolbar: View {
         // Apply underline to entire selection
         let newUnderline = hasUnderline ? 0 : NSUnderlineStyle.single.rawValue
         textStorage.addAttribute(.underlineStyle, value: newUnderline, range: selectedRange)
+    }
+    
+    private func toggleStrikethrough() {
+        guard let textView = textView, let textStorage = textView.textStorage else { return }
+        textView.window?.makeFirstResponder(textView)
+        
+        let selectedRange = textView.selectedRange()
+        guard selectedRange.length > 0 else { return }
+        
+        // Check if any character in selection has strikethrough
+        var hasStrikethrough = false
+        textStorage.enumerateAttribute(.strikethroughStyle, in: selectedRange, options: []) { value, range, stop in
+            if let strikethrough = value as? Int, strikethrough != 0 {
+                hasStrikethrough = true
+                stop.pointee = true
+            }
+        }
+        
+        // Apply strikethrough to entire selection
+        let newStrikethrough = hasStrikethrough ? 0 : NSUnderlineStyle.single.rawValue
+        textStorage.addAttribute(.strikethroughStyle, value: newStrikethrough, range: selectedRange)
     }
     
     private func insertBulletList() {

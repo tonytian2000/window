@@ -81,7 +81,7 @@ struct SettingsView: View {
                 }
                 
                 // Window Size Settings
-                GroupBox(label: Label(localization.localized("settings.window"), systemImage: "rectangle.resize")) {
+                GroupBox(label: Label(localization.localized("settings.window"), systemImage: "macwindow")) {
                     VStack(alignment: .leading, spacing: 12) {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {

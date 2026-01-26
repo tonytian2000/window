@@ -402,7 +402,7 @@
 				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = window/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = DirectNote;
+				INFOPLIST_KEY_CFBundleDisplayName = LightningNote;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -450,7 +450,7 @@
 				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = window/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = DirectNote;
+				INFOPLIST_KEY_CFBundleDisplayName = LightningNote;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (

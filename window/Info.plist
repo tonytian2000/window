@@ -16,7 +16,7 @@
 		<string>zh-Hans</string>
 	</array>
 	<key>CFBundleName</key>
-	<string>DirectNote</string>
+	<string>LightningNote</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
