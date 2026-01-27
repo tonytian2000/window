@@ -98,6 +98,12 @@
 "settings.close" = "Schließen";
 "settings.auto.save.info" = "Einstellungen werden automatisch gespeichert";
 
+/* About View */
+"about.app_name" = "Lightning Note";
+"about.version" = "Version 1.0";
+"about.description" = "Eine leichte, elegante Notiz-App in der Menüleiste. Erfassen Sie Ihre Gedanken schnell mit Rich-Text-Formatierung und halten Sie sie organisiert.";
+"about.close" = "Schließen";
+
 /* General */
 "general.ok" = "OK";
 "general.cancel" = "Abbrechen";
@@ -105,6 +111,6 @@
 "general.delete" = "Löschen";
 "general.edit" = "Bearbeiten";
 "general.done" = "Fertig";
-"general.loading" = "Lädt...";
+"general.loading" = "Laden...";
 "general.error" = "Fehler";
 "general.success" = "Erfolg";

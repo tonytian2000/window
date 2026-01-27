@@ -98,6 +98,12 @@
 "settings.close" = "关闭";
 "settings.auto.save.info" = "设置自动保存";
 
+/* About View */
+"about.app_name" = "闪电笔记";
+"about.version" = "版本 1.0";
+"about.description" = "一款轻量、优雅的菜单栏笔记应用。快速记录您的想法，使用富文本格式，保持井然有序。";
+"about.close" = "关闭";
+
 /* General */
 "general.ok" = "确定";
 "general.cancel" = "取消";

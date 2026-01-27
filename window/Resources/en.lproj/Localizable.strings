@@ -98,6 +98,12 @@
 "settings.close" = "Close";
 "settings.auto.save.info" = "Settings are automatically saved";
 
+/* About View */
+"about.app_name" = "Lightning Note";
+"about.version" = "Version 1.0";
+"about.description" = "A lightweight, elegant note-taking app that lives in your menu bar. Capture your thoughts quickly with rich text formatting and keep them organized.";
+"about.close" = "Close";
+
 /* General */
 "general.ok" = "OK";
 "general.cancel" = "Cancel";

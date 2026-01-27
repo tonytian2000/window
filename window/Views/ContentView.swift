@@ -4,6 +4,7 @@ struct ContentView: View {
     @State private var selectedTab = 1
     @State private var showingAlertSettings = false
     @State private var showingNotesSettings = false
+    @State private var showingAbout = false
     @StateObject private var alertsViewModel = AlertsViewModel()
     @StateObject private var notesViewModel = NotesViewModel()
     @ObservedObject var localization = LocalizationManager.shared
@@ -26,22 +27,27 @@ struct ContentView: View {
                         NSWorkspace.shared.open(url)
                     }
                 }) {
-                    Image(systemName: "heart.fill")
-                        .font(.system(size: 18))
-                        .foregroundColor(.pink)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 6)
-                        .contentShape(Rectangle())
+                    Image("coffee")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
+                        .padding(.vertical, 4)
                 }
                 .buttonStyle(PlainButtonStyle())
                 .help("Support Development")
                 
-                // App icon at bottom
-                Image("win")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 26, height: 26)
-                    .padding(.vertical, 8)
+                // App icon at bottom - click to show About
+                Button(action: {
+                    showingAbout = true
+                }) {
+                    Image("win")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
+                        .padding(.vertical, 4)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .help(localization.localized("settings.about"))
             }
             .frame(width: 50)
             .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.95))
@@ -73,6 +79,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingNotesSettings) {
             NotesSettingsView()
+        }
+        .sheet(isPresented: $showingAbout) {
+            AboutView()
         }
     }
     
@@ -140,7 +149,7 @@ struct TabButton: View {
         }) {
             ZStack(alignment: .topTrailing) {
                 Image(systemName: icon)
-                    .font(.system(size: 16))
+                    .font(.system(size: 18))
                     .frame(maxWidth: .infinity)
                 
                 if badgeCount > 0 {

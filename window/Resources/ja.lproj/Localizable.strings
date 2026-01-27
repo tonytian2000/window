@@ -98,6 +98,12 @@
 "settings.close" = "閉じる";
 "settings.auto.save.info" = "設定は自動的に保存されます";
 
+/* About View */
+"about.app_name" = "ライトニングノート";
+"about.version" = "バージョン 1.0";
+"about.description" = "メニューバーに常駐する、軽量でエレガントなメモアプリ。リッチテキスト形式で素早く思考を記録し、整理できます。";
+"about.close" = "閉じる";
+
 /* General */
 "general.ok" = "OK";
 "general.cancel" = "キャンセル";
