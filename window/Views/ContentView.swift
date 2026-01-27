@@ -22,7 +22,7 @@ struct ContentView: View {
                 
                 // Donation button
                 Button(action: {
-                    if let url = URL(string: "https://www.paypal.com/donate/?business=tonytian2000@outlook.com&currency_code=USD") {
+                    if let url = URL(string: "https://buymeacoffee.com/zero2me") {
                         NSWorkspace.shared.open(url)
                     }
                 }) {

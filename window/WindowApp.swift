@@ -24,7 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Load custom icon from bundle resources
             if let customImage = NSImage(named: "win") {
                 // Resize to standard menu bar size (18pt is optimal for menu bar icons)
-                customImage.size = NSSize(width: 18, height: 18)
+                customImage.size = NSSize(width: 25, height: 25)
                 // Use the actual icon colors instead of template mode for better visibility
                 // This makes the icon stand out more in both light and dark themes
                 customImage.isTemplate = false
