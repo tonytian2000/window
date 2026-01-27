@@ -54,7 +54,7 @@
 		1A000000000000000000023 /* win.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = win.png; sourceTree = "<group>"; };
 		1A000000000000000000024 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1A000000000000000000025 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
-		1A100000000000000000001 /* Window.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Window.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A100000000000000000001 /* LightningNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LightningNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82668AC02F26390000C7A109 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		82668AC12F26391000C7A109 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,7 +97,7 @@
 		1A300000000000000000003 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1A100000000000000000001 /* Window.app */,
+				1A100000000000000000001 /* LightningNote.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,9 +158,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1A400000000000000000001 /* Window */ = {
+		1A400000000000000000001 /* LightningNote */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1A500000000000000000001 /* Build configuration list for PBXNativeTarget "Window" */;
+			buildConfigurationList = 1A500000000000000000001 /* Build configuration list for PBXNativeTarget "LightningNote" */;
 			buildPhases = (
 				1A600000000000000000001 /* Sources */,
 				1A200000000000000000001 /* Frameworks */,
@@ -170,9 +170,9 @@
 			);
 			dependencies = (
 			);
-			name = Window;
+			name = LightningNote;
 			productName = Window;
-			productReference = 1A100000000000000000001 /* Window.app */;
+			productReference = 1A100000000000000000001 /* LightningNote.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -206,7 +206,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1A400000000000000000001 /* Window */,
+				1A400000000000000000001 /* LightningNote */,
 			);
 		};
 /* End PBXProject section */
@@ -388,9 +388,10 @@
 		1A900000000000000000003 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = win.png;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = win.png;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				AUTOMATION_APPLE_EVENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -436,9 +437,10 @@
 		1A900000000000000000004 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = win.png;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = win.png;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				AUTOMATION_APPLE_EVENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -484,7 +486,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1A500000000000000000001 /* Build configuration list for PBXNativeTarget "Window" */ = {
+		1A500000000000000000001 /* Build configuration list for PBXNativeTarget "LightningNote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1A900000000000000000003 /* Debug */,
