@@ -25,9 +25,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if let customImage = NSImage(named: "win") {
                 // Resize to standard menu bar size (18pt is optimal for menu bar icons)
                 customImage.size = NSSize(width: 18, height: 18)
-                // Make it a template image so it adapts to light/dark mode automatically
-                // White in dark mode, black in light mode
-                customImage.isTemplate = true
+                // Use the actual icon colors instead of template mode for better visibility
+                // This makes the icon stand out more in both light and dark themes
+                customImage.isTemplate = false
                 button.image = customImage
             } else {
                 // Fallback to system icon if custom image not found

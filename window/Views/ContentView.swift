@@ -20,21 +20,28 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                
+                // Donation button
+                Button(action: {
+                    if let url = URL(string: "https://www.paypal.com/donate/?business=tonytian2000@outlook.com&currency_code=USD") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }) {
+                    Image(systemName: "heart.fill")
+                        .font(.system(size: 18))
+                        .foregroundColor(.pink)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 6)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(PlainButtonStyle())
+                .help("Support Development")
                 
                 // App icon at bottom
-                if let nsImage = NSImage(named: "win") {
-                    Image(nsImage: nsImage)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 18, height: 18)
-                        .padding(.vertical, 12)
-                } else {
-                    Image(systemName: "square.fill")
-                        .font(.system(size: 18))
-                        .foregroundColor(.accentColor)
-                        .padding(.vertical, 12)
-                }
+                Image("win")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 26, height: 26)
+                    .padding(.vertical, 8)
             }
             .frame(width: 50)
             .background(ContentView.adaptiveBackgroundColor(theme: settings.theme, backgroundColor: settings.backgroundColor, opacity: 0.95))
