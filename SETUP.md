@@ -100,7 +100,7 @@ Note: Creating a proper Xcode project file is best done through Xcode GUI as it 
 
 ### First Run
 
-1. **Open the project** in Xcode (Window.xcodeproj)
+1. **Open the project** in Xcode (LightningNote.xcodeproj)
 
 2. **Select your signing team**:
    - Select the project in Project Navigator
@@ -127,7 +127,7 @@ Note: Creating a proper Xcode project file is best done through Xcode GUI as it 
 
 ```bash
 # Open project in Xcode
-open Window.xcodeproj
+open LightningNote.xcodeproj
 
 # Or use xed (Xcode editor) from command line
 xed .

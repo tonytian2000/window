@@ -208,13 +208,13 @@ Alternative wrapper format also supported:
 ### Building the Project
 ```bash
 # Open in Xcode
-open Window.xcodeproj
+open LightningNote.xcodeproj
 
 # Or use convenience script
 ./open-in-xcode.sh
 
 # Build from command line
-xcodebuild -project Window.xcodeproj -scheme Window -configuration Debug build
+xcodebuild -project LightningNote.xcodeproj -scheme LightningNote -configuration Debug build
 ```
 
 ### Running the App
