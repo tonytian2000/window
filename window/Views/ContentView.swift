@@ -71,7 +71,7 @@ struct ContentView: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.black, lineWidth: 2)
+                .stroke(Color.black, lineWidth: 0.5)
         )
         
         .sheet(isPresented: $showingAlertSettings) {

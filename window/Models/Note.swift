@@ -54,9 +54,7 @@ struct Note: Identifiable, Codable {
 extension Note {
     static var sampleNotes: [Note] {
         [
-            Note(content: "Review pull request #234 - authentication changes", category: "Work"),
-            Note(content: "Meeting at 3 PM with design team", timestamp: Date().addingTimeInterval(-1800), category: "Meeting"),
-            Note(content: "Fix bug in payment processing", timestamp: Date().addingTimeInterval(-3600))
+            Note(content: "Thanks to use Lightning Note, friend, have a good day!", category: "Work"),
         ]
     }
 }
