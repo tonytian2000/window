@@ -192,7 +192,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1A500000000000000000002 /* Build configuration list for PBXProject "Window" */;
+			buildConfigurationList = 1A500000000000000000002 /* Build configuration list for PBXProject "LightningNote" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -504,7 +504,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1A500000000000000000002 /* Build configuration list for PBXProject "Window" */ = {
+		1A500000000000000000002 /* Build configuration list for PBXProject "LightningNote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1A900000000000000000001 /* Debug */,
