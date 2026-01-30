@@ -22,6 +22,7 @@ struct ContentView: View {
                 Spacer()
                 
                 // Donation button
+                /*
                 Button(action: {
                     if let url = URL(string: "https://buymeacoffee.com/zero2me") {
                         NSWorkspace.shared.open(url)
@@ -35,6 +36,7 @@ struct ContentView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .help("Support Development")
+                 */
                 
                 // App icon at bottom - click to show About
                 Button(action: {

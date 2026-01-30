@@ -7,6 +7,7 @@
 /* Content View - Tabs */
 "tab.alerts" = "アラート";
 "tab.notes" = "ノート";
+"tab.support" = "サポート";
 
 /* Alerts View */
 "alerts.title" = "本番環境アラート";
@@ -103,6 +104,17 @@
 "about.version" = "バージョン 1.0";
 "about.description" = "メニューバーに常駐する、軽量でエレガントなメモアプリ。リッチテキスト形式で素早く思考を記録し、整理できます。";
 "about.close" = "閉じる";
+
+/* Support View */
+"support.title" = "開発をサポート";
+"support.description" = "ライトニングノートをご利用いただきありがとうございます！皆様のサポートにより、このアプリを無料で継続的に改善できます。";
+"support.coffee.title" = "コーヒーを買う";
+"support.coffee.description" = "一度きりの寄付でサポート";
+"support.coffee.button" = "Coffeeで寄付";
+"support.premium.title" = "プレミアム機能";
+"support.premium.description" = "一度きりの購入で高度な機能をアンロック";
+"support.premium.button" = "プレミアムにアップグレード";
+"support.close" = "閉じる";
 
 /* General */
 "general.ok" = "OK";

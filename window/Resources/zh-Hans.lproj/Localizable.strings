@@ -5,8 +5,9 @@
 "menu.quit" = "退出 Window";
 
 /* Content View - Tabs */
-"tab.alerts" = "警报";
+"tab.alerts" = "提醒";
 "tab.notes" = "笔记";
+"tab.support" = "支持";
 
 /* Alerts View */
 "alerts.title" = "生产环境警报";
@@ -103,6 +104,17 @@
 "about.version" = "版本 1.0";
 "about.description" = "一款轻量、优雅的菜单栏笔记应用。快速记录您的想法，使用富文本格式，保持井然有序。";
 "about.close" = "关闭";
+
+/* Support View */
+"support.title" = "支持开发";
+"support.description" = "感谢您使用闪电笔记！您的支持有助于保持此应用免费并持续改进。";
+"support.coffee.title" = "请我喝杯咖啡";
+"support.coffee.description" = "通过一次性捐赠支持";
+"support.coffee.button" = "通过 Coffee 捐赠";
+"support.premium.title" = "高级功能";
+"support.premium.description" = "通过一次性购买解锁高级功能";
+"support.premium.button" = "升级到高级版";
+"support.close" = "关闭";
 
 /* General */
 "general.ok" = "确定";

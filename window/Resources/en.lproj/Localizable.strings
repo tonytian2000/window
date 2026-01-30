@@ -7,6 +7,7 @@
 /* Content View - Tabs */
 "tab.alerts" = "Alerts";
 "tab.notes" = "Notes";
+"tab.support" = "Support";
 
 /* Alerts View */
 "alerts.title" = "Production Alerts";
@@ -103,6 +104,17 @@
 "about.version" = "Version 1.0";
 "about.description" = "A lightweight, elegant note-taking app that lives in your menu bar. Capture your thoughts quickly with rich text formatting and keep them organized.";
 "about.close" = "Close";
+
+/* Support View */
+"support.title" = "Support Development";
+"support.description" = "Thank you for using Lightning Note! Your support helps keep this app free and continuously improving.";
+"support.coffee.title" = "Buy Me a Coffee";
+"support.coffee.description" = "Support with a one-time donation";
+"support.coffee.button" = "Donate via Coffee";
+"support.premium.title" = "Premium Features";
+"support.premium.description" = "Unlock advanced features with a one-time purchase";
+"support.premium.button" = "Upgrade to Premium";
+"support.close" = "Close";
 
 /* General */
 "general.ok" = "OK";

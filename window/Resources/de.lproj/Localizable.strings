@@ -5,8 +5,9 @@
 "menu.quit" = "Window beenden";
 
 /* Content View - Tabs */
-"tab.alerts" = "Benachrichtigungen";
+"tab.alerts" = "Warnungen";
 "tab.notes" = "Notizen";
+"tab.support" = "Unterstützung";
 
 /* Alerts View */
 "alerts.title" = "Produktionsbenachrichtigungen";
@@ -103,6 +104,17 @@
 "about.version" = "Version 1.0";
 "about.description" = "Eine leichte, elegante Notiz-App in der Menüleiste. Erfassen Sie Ihre Gedanken schnell mit Rich-Text-Formatierung und halten Sie sie organisiert.";
 "about.close" = "Schließen";
+
+/* Support View */
+"support.title" = "Entwicklung unterstützen";
+"support.description" = "Vielen Dank, dass Sie Lightning Note verwenden! Ihre Unterstützung hilft, diese App kostenlos zu halten und kontinuierlich zu verbessern.";
+"support.coffee.title" = "Spendieren Sie mir einen Kaffee";
+"support.coffee.description" = "Unterstützen Sie mit einer einmaligen Spende";
+"support.coffee.button" = "Via Coffee spenden";
+"support.premium.title" = "Premium-Funktionen";
+"support.premium.description" = "Erweiterte Funktionen mit einem einmaligen Kauf freischalten";
+"support.premium.button" = "Auf Premium upgraden";
+"support.close" = "Schließen";
 
 /* General */
 "general.ok" = "OK";
