@@ -23,12 +23,14 @@
 		1A00000F000000000000001 /* NotesSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000016 /* NotesSettingsView.swift */; };
 		1A000010000000000000001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000019 /* Localizable.strings */; };
 		1A000011000000000000001 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000020 /* LocalizationManager.swift */; };
+		1A000017000000000000001 /* StoreKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000026 /* StoreKitManager.swift */; };
 		1A000012000000000000001 /* RichTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000021 /* RichTextEditor.swift */; };
 		1A000013000000000000001 /* NotesViewRich.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000022 /* NotesViewRich.swift */; };
 		1A000014000000000000001 /* win.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000023 /* win.png */; };
 		1A000015000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000024 /* Assets.xcassets */; };
 		1A000016000000000000001 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000000000000000000025 /* AboutView.swift */; };
 		82A755D12F2CAE6E00398D58 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A755D02F2CAE6E00398D58 /* StoreKit.framework */; };
+		82A755D32F2CB3A900398D58 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A755D22F2CB3A900398D58 /* SupportView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,7 @@
 		1A000000000000000000017 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1A000000000000000000018 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1A000000000000000000020 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
+		1A000000000000000000026 /* StoreKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
 		1A000000000000000000021 /* RichTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditor.swift; sourceTree = "<group>"; };
 		1A000000000000000000022 /* NotesViewRich.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewRich.swift; sourceTree = "<group>"; };
 		1A000000000000000000023 /* win.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = win.png; sourceTree = "<group>"; };
@@ -60,6 +63,7 @@
 		82668AC12F26391000C7A109 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		82A755CE2F298C8400398D58 /* LightningNote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LightningNote.entitlements; sourceTree = "<group>"; };
 		82A755D02F2CAE6E00398D58 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		82A755D22F2CB3A900398D58 /* SupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +115,7 @@
 		1A300000000000000000004 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				82A755D22F2CB3A900398D58 /* SupportView.swift */,
 				1A000000000000000000002 /* ContentView.swift */,
 				1A000000000000000000003 /* AlertsView.swift */,
 				1A000000000000000000022 /* NotesViewRich.swift */,
@@ -148,6 +153,7 @@
 				1A000000000000000000011 /* StorageService.swift */,
 				1A000000000000000000012 /* AlertService.swift */,
 				1A000000000000000000020 /* LocalizationManager.swift */,
+				1A000000000000000000026 /* StoreKitManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -252,12 +258,14 @@
 				1A000008000000000000001 /* AppSettings.swift in Sources */,
 				1A000009000000000000001 /* AlertsViewModel.swift in Sources */,
 				1A00000A000000000000001 /* NotesViewModel.swift in Sources */,
+				82A755D32F2CB3A900398D58 /* SupportView.swift in Sources */,
 				1A00000B000000000000001 /* StorageService.swift in Sources */,
 				1A00000C000000000000001 /* AlertService.swift in Sources */,
 				1A00000D000000000000001 /* WindowPanel.swift in Sources */,
 				1A00000E000000000000001 /* AlertSettingsView.swift in Sources */,
 				1A00000F000000000000001 /* NotesSettingsView.swift in Sources */,
 				1A000011000000000000001 /* LocalizationManager.swift in Sources */,
+				1A000017000000000000001 /* StoreKitManager.swift in Sources */,
 				1A000012000000000000001 /* RichTextEditor.swift in Sources */,
 				1A000013000000000000001 /* NotesViewRich.swift in Sources */,
 				1A000016000000000000001 /* AboutView.swift in Sources */,

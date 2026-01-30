@@ -5,6 +5,7 @@ struct ContentView: View {
     @State private var showingAlertSettings = false
     @State private var showingNotesSettings = false
     @State private var showingAbout = false
+    @State private var showingSupport = false
     @StateObject private var alertsViewModel = AlertsViewModel()
     @StateObject private var notesViewModel = NotesViewModel()
     @ObservedObject var localization = LocalizationManager.shared
@@ -21,22 +22,17 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                // Donation button
-                /*
+                // Support button - opens support/in-app purchase view
                 Button(action: {
-                    if let url = URL(string: "https://buymeacoffee.com/zero2me") {
-                        NSWorkspace.shared.open(url)
-                    }
+                    showingSupport = true
                 }) {
-                    Image("coffee")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 32, height: 32)
-                        .padding(.vertical, 4)
+                    Image(systemName: "heart.fill")
+                        .font(.system(size: 18))
+                        .foregroundColor(.pink)
+                        .frame(width: 50, height: 44)
                 }
                 .buttonStyle(PlainButtonStyle())
-                .help("Support Development")
-                 */
+                .help(localization.localized("tab.support"))
                 
                 // App icon at bottom - click to show About
                 Button(action: {
@@ -84,6 +80,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingAbout) {
             AboutView()
+        }
+        .sheet(isPresented: $showingSupport) {
+            SupportView()
         }
     }
     

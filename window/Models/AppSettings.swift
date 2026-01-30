@@ -90,6 +90,10 @@ class AppSettings: ObservableObject {
             NotificationCenter.default.post(name: NSNotification.Name("ThemeChanged"), object: nil)
         }
     }
+
+    @Published var hasPremium: Bool {
+        didSet { UserDefaults.standard.set(hasPremium, forKey: "hasPremium") }
+    }
     
     private init() {
         // Alert settings
@@ -116,5 +120,6 @@ class AppSettings: ObservableObject {
         self.baseFontSize = UserDefaults.standard.integer(forKey: "baseFontSize") == 0 ? 13 : UserDefaults.standard.integer(forKey: "baseFontSize")
         self.backgroundColor = UserDefaults.standard.string(forKey: "backgroundColor") ?? "white"
         self.theme = UserDefaults.standard.string(forKey: "theme") ?? "light"
+        self.hasPremium = UserDefaults.standard.object(forKey: "hasPremium") == nil ? false : UserDefaults.standard.bool(forKey: "hasPremium")
     }
 }

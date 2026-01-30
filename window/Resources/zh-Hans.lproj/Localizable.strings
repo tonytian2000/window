@@ -114,6 +114,10 @@
 "support.premium.title" = "高级功能";
 "support.premium.description" = "通过一次性购买解锁高级功能";
 "support.premium.button" = "升级到高级版";
+"support.premium.purchased" = "高级版已解锁";
+"support.premium.processing" = "处理中...";
+"support.premium.thanks" = "感谢您的支持！";
+"support.restore.button" = "恢复购买";
 "support.close" = "关闭";
 
 /* General */

@@ -114,6 +114,10 @@
 "support.premium.title" = "Premium Features";
 "support.premium.description" = "Unlock advanced features with a one-time purchase";
 "support.premium.button" = "Upgrade to Premium";
+"support.premium.purchased" = "Premium Unlocked";
+"support.premium.processing" = "Processing...";
+"support.premium.thanks" = "Thank you for supporting!";
+"support.restore.button" = "Restore Purchases";
 "support.close" = "Close";
 
 /* General */
