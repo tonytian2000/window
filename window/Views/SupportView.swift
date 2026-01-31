@@ -30,6 +30,7 @@ struct SupportView: View {
                         .padding(.top, 20)
                     
                     // Buy Me a Coffee Card
+                    /*
                     SupportCard(
                         icon: "cup.and.saucer.fill",
                         title: localization.localized("support.coffee.title"),
@@ -42,6 +43,7 @@ struct SupportView: View {
                             }
                         }
                     )
+                    */
                     
                     // Premium Features Card
                     SupportCard(

@@ -5,7 +5,7 @@ import StoreKit
 final class StoreKitManager: ObservableObject {
     static let shared = StoreKitManager()
 
-    private let premiumProductID = "com.tonytian.window.premium"
+    private let premiumProductID = "com.zero2me.mac.note.v1"
     private let productIDs: Set<String>
     private var updatesTask: Task<Void, Never>?
 
