@@ -47,7 +47,7 @@ struct SupportView: View {
                     
                     // Premium Features Card
                     SupportCard(
-                        icon: "star.fill",
+                        icon: "cup.and.saucer.fill",
                         title: localization.localized("support.premium.title"),
                         description: localization.localized("support.premium.description"),
                         buttonText: premiumButtonText,

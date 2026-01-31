@@ -111,13 +111,13 @@
 "support.coffee.title" = "Buy Me a Coffee";
 "support.coffee.description" = "Support with a one-time donation";
 "support.coffee.button" = "Donate via Coffee";
-"support.premium.title" = "Premium Features";
-"support.premium.description" = "Unlock advanced features with a one-time purchase";
-"support.premium.button" = "Upgrade to Premium";
-"support.premium.purchased" = "Premium Unlocked";
+"support.premium.title" = "Donation";
+"support.premium.description" = "I hope to create software you find useful and fun. If you feel like you've gotten value from my software and you'd like to make a donation, you can do so here";
+"support.premium.button" = "Buy me a coffee";
+"support.premium.purchased" = "Thanks for your donation!";
 "support.premium.processing" = "Processing...";
 "support.premium.thanks" = "Thank you for supporting!";
-"support.restore.button" = "Restore Purchases";
+"support.restore.button" = "Restore Donation";
 "support.close" = "Close";
 
 /* General */

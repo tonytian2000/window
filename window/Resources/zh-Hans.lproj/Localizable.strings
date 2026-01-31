@@ -111,13 +111,13 @@
 "support.coffee.title" = "请我喝杯咖啡";
 "support.coffee.description" = "通过一次性捐赠支持";
 "support.coffee.button" = "通过 Coffee 捐赠";
-"support.premium.title" = "高级功能";
-"support.premium.description" = "通过一次性购买解锁高级功能";
-"support.premium.button" = "升级到高级版";
-"support.premium.purchased" = "高级版已解锁";
+"support.premium.title" = "捐赠";
+"support.premium.description" = "我希望创建您觉得有用和有趣的软件。如果您觉得从我的软件中获得了价值并想要捐赠，可以在这里进行";
+"support.premium.button" = "请我喝杯咖啡";
+"support.premium.purchased" = "感谢您的捐赠！";
 "support.premium.processing" = "处理中...";
 "support.premium.thanks" = "感谢您的支持！";
-"support.restore.button" = "恢复购买";
+"support.restore.button" = "恢复捐赠";
 "support.close" = "关闭";
 
 /* General */

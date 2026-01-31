@@ -26,10 +26,11 @@ struct ContentView: View {
                 Button(action: {
                     showingSupport = true
                 }) {
-                    Image(systemName: "heart.fill")
-                        .font(.system(size: 18))
-                        .foregroundColor(.pink)
-                        .frame(width: 50, height: 44)
+                    Image("coffee")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
+                        .padding(.vertical, 4)
                 }
                 .buttonStyle(PlainButtonStyle())
                 .help(localization.localized("tab.support"))

@@ -111,13 +111,13 @@
 "support.coffee.title" = "コーヒーを買う";
 "support.coffee.description" = "一度きりの寄付でサポート";
 "support.coffee.button" = "Coffeeで寄付";
-"support.premium.title" = "プレミアム機能";
-"support.premium.description" = "一度きりの購入で高度な機能をアンロック";
-"support.premium.button" = "プレミアムにアップグレード";
-"support.premium.purchased" = "プレミアムが有効になりました";
+"support.premium.title" = "寄付";
+"support.premium.description" = "役に立つと思っていただけるソフトウェアを作りたいと思っています。私のソフトウェアから価値を得られたと感じ、寄付をしたい場合は、こちらからお願いします";
+"support.premium.button" = "コーヒーを買う";
+"support.premium.purchased" = "ご寄付ありがとうございます！";
 "support.premium.processing" = "処理中...";
 "support.premium.thanks" = "ご支援ありがとうございます！";
-"support.restore.button" = "購入を復元";
+"support.restore.button" = "寄付を復元";
 "support.close" = "閉じる";
 
 /* General */
